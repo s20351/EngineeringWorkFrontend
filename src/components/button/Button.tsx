@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { StyledButton } from "./styledButton";
 
 interface ButtonProps {
@@ -5,7 +6,7 @@ interface ButtonProps {
   handleClick: () => void;
 }
 
-const Button = ({ handleClick, text }: ButtonProps) => {
+const Button = ({ handleClick, text }: ButtonProps): ReactElement => {
   return (
     <StyledButton type="button" onClick={() => handleClick()}>
       {text}
