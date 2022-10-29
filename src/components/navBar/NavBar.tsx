@@ -1,5 +1,4 @@
-import { StyledNavBar, StyledLi, StyledButton } from "./styledNavBar";
-import { Button } from "@mui/material";
+import { StyledNavBar, StyledLi, StyledButton, H1 } from "./styledNavBar";
 
 interface NavBarProps {
   handleChangePage: (pageNumber: number) => void;
@@ -10,17 +9,27 @@ const NavBar = ({ handleChangePage }: NavBarProps) => {
     <StyledNavBar>
       <StyledLi>
         <StyledButton variant="contained" onClick={() => handleChangePage(1)}>
-          First page
+          <H1>Home</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
         <StyledButton variant="contained" onClick={() => handleChangePage(2)}>
-          Second page
+        <H1>Hodowla</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
         <StyledButton variant="contained" onClick={() => handleChangePage(3)}>
-          Third page
+          <H1>Pasza</H1>
+        </StyledButton>
+      </StyledLi>
+      <StyledLi>
+        <StyledButton variant="contained" onClick={() => handleChangePage(4)}>
+        <H1>Hodowcy</H1>
+        </StyledButton>
+      </StyledLi>
+      <StyledLi>
+        <StyledButton variant="contained" onClick={() => handleChangePage(5)}>
+        <H1>INDOS</H1>
         </StyledButton>
       </StyledLi>
     </StyledNavBar>
