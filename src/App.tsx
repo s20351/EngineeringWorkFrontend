@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { NavBar } from "./components";
-import { ClickCounter } from "./components/clickCounter";
+import { NavBar, Home, Hodowla, Indos, Pasza, Hodowcy } from "./components";
+import { StyledAppLayout } from "./styledApp";
 
 function App() {
   const [page, setPage] = useState(0);
@@ -13,7 +13,13 @@ function App() {
   return (
     <>
       <NavBar handleChangePage={handlePageChange} />
-      {page === 1 && <ClickCounter />}
+      <StyledAppLayout>
+      {page === 1 && <Home />} 
+      {page === 2 && <Hodowla />} 
+      {page === 3 && <Pasza />} 
+      {page === 4 && <Hodowcy />}
+      {page === 5 && <Indos />} 
+      </StyledAppLayout>
     </>
   );
 }
