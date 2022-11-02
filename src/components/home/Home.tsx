@@ -90,7 +90,7 @@ export default function TableHome() {
   const [homeScreen, setHomeScreen] = React.useState([])
 
 useEffect(() => {
-  fetch('http://localhost:5228/api/Farms/GetHome?farmerID=1')
+  fetch('http://localhost:5228/api/Farms/GetHomeDetails?farmerID=1')
   .then(response => response.json())
   .then(res => setHomeScreen(res))
   .then(res => console.log(res))
