@@ -15,8 +15,6 @@ interface ModalProps {
 export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const outsideRef = React.useRef(null);
   const [name, setName] = useState<string>("");
-  const [adress, setAdress] = useState<string>("");
-
   const handleCloseOnOverlay = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -26,10 +24,9 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   };
   const initialState = {
     name: "",
-    adres: "",
   };
 
-  const { onChange, onSubmit, values } = useForm(initialState);
+  const { onChange, onSubmit } = useForm(initialState);
 
   return isOpen ? (
     <div className={"modal"}>
@@ -58,17 +55,7 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   required
                 />
               </StyledDiv>
-              <StyledDiv>
-                <label htmlFor="adres">Adres:</label>
-                <input
-                  name="adres"
-                  id="adres"
-                  type="text"
-                  onChange={onChange}
-                  required
-                />
-              </StyledDiv>
-              <StyledButton type="submit">Dodaj</StyledButton>
+              <StyledButton type="submit" onClick={() => { postNewFarm(name); onClose();}} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

@@ -15,7 +15,7 @@ const StyledButton = styled(Button)`
   height: 4rem;
   margin-top: 1rem;
   margin-left: 1rem;
-  left: 37%
+
 `;
 
 const StyledLi = styled.li`

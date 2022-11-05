@@ -16,23 +16,32 @@ import { StyledHomeLayout, StyledButton } from "./styledHome";
 import { AddFarm } from "./AddFarm";
 import { AddOrderHatchery } from "./AddOrderHatchery";
 import { AddCycle } from "./AddCycle";
+import { DeleteFarm } from "./DeleteFarm"
 import { getHomeDetailsById } from "../../services";
+import { AddExport } from "./AddExport";
 
 function Home() {
   const [isAddFarmOpen, setAddFarmState] = React.useState(false);
   const [isAddCycleOpen, setAddCycleState] = React.useState(false);
   const [isAddOrderHatcheryOpen, setOrderHatcheryState] = React.useState(false);
+  const [isDeleteFarmOpen, setDeleteFarmState] = React.useState(false);
+  const [isExportOpen, setExportState] = React.useState(false);
 
   const toggleAddFarm = () => setAddFarmState(!isAddFarmOpen);
   const toggleAddCycle = () => setAddCycleState(!isAddCycleOpen);
   const toggleAddOrderHatchery = () =>
     setOrderHatcheryState(!isAddOrderHatcheryOpen);
+  const toggleDeleteFarm = () =>  setDeleteFarmState(!isDeleteFarmOpen);
+  const toggleExport = () => setExportState(!isExportOpen);
 
   return (
     <div>
       <>
         <StyledHomeLayout>
           {TableHome()}
+          <StyledButton variant="contained" onClick={() => toggleDeleteFarm()}>
+            Usuń Fermę
+          </StyledButton>
           <StyledButton variant="contained" onClick={() => toggleAddFarm()}>
             Dodaj Fermę
           </StyledButton>
@@ -45,26 +54,38 @@ function Home() {
           <StyledButton variant="contained" onClick={() => toggleAddCycle()}>
             Dodaj Wstawienie
           </StyledButton>
+          <StyledButton variant="contained" onClick={() => toggleExport()}>
+            Dodaj Zdawanie
+          </StyledButton>
+          <AddExport
+          title = {"Dodaj zdawanie"}
+          isOpen={isExportOpen}
+          onClose={toggleExport}
+          >
+          </AddExport>
+          <DeleteFarm
+          title = {"Usuń Fermę"}
+          isOpen={isDeleteFarmOpen}
+          onClose={toggleDeleteFarm}
+          >
+          </DeleteFarm>
           <AddFarm
             title={"Dodaj Fermę"}
             isOpen={isAddFarmOpen}
             onClose={toggleAddFarm}
           >
-            Nazwa obiektu ...
           </AddFarm>
           <AddOrderHatchery
             title={"Dodaj zamówienie z wylęgarni"}
             isOpen={isAddOrderHatcheryOpen}
             onClose={toggleAddOrderHatchery}
           >
-            Nazwa obiektu ...
           </AddOrderHatchery>
           <AddCycle
             title={"Dodaj wstawienie"}
             isOpen={isAddCycleOpen}
             onClose={toggleAddCycle}
           >
-            Nazwa obiektu ...
           </AddCycle>
         </StyledHomeLayout>
       </>
@@ -97,21 +118,22 @@ export default function TableHome() {
   const [homeScreen, setHomeScreen] = React.useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5228/api/Farms/GetHomeDetails?farmerID=1")
-      .then((response) => response.json())
-      .then((res) => setHomeScreen(res))
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const fetchData = async () =>{
+    const data = await getHomeDetailsById();
+    setHomeScreen(data);
+  }
+  fetchData()
+  .catch(console.error)
   }, []);
 
   const objects: Array<ObjectsHome> = homeScreen;
 
   return (
     <TableContainer component={Paper} sx={tableContainerSx}>
-      <Table stickyHeader={true}>
+      <Table stickyHeader={false}>
         <TableHead
           sx={{
-            "& .MuiTableCell-stickyHeader": {
+            "& th": {
               backgroundColor: "rgb(27, 77, 137)",
               fontSize: "1.2rem",
             },
@@ -119,7 +141,7 @@ export default function TableHome() {
         >
           <TableRow
             sx={{
-              backgroundColor: "yellow",
+              backgroundColor: "rgb(27, 77, 137)",
               borderBottom: "2px solid black",
               "& th": {
                 color: "rgb(249, 228, 91)",
@@ -142,7 +164,8 @@ export default function TableHome() {
             },
           }}
         >
-          {objects.map((object) => (
+        {
+        objects.map((object)=> (
             <TableRow>
               <TableCell align="center">{object.objectName}</TableCell>
               <TableCell align="center">{object.aliveMale}</TableCell>

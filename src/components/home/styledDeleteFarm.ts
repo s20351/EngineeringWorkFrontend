@@ -7,13 +7,15 @@ const StyledFieldSet = styled.fieldset`
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 16rem;
+  width: 15rem;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 `;
 
 const StyledButton = styled.button`
-  width: fit-content;
+  width: 10rem;
+  height: 3rem;
+  margin: 1rem;
 `;
 
 export { StyledFieldSet, StyledDiv, StyledButton };
