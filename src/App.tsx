@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavBar, Home, Hodowla, Indos, Pasza, Hodowcy } from "./components";
+import { NavBar, Home, Indos, Feed, Farmers, Breeding } from "./components";
 import { StyledAppLayout } from "./styledApp";
 
 function App() {
@@ -7,7 +7,6 @@ function App() {
 
   const handlePageChange = (pageNumber: number): void => {
     setPage(pageNumber);
-    console.log(pageNumber);
   };
 
   return (
@@ -15,9 +14,9 @@ function App() {
       <NavBar handleChangePage={handlePageChange} />
       <StyledAppLayout>
       {page === 1 && <Home />} 
-      {page === 2 && <Hodowla />} 
-      {page === 3 && <Pasza />} 
-      {page === 4 && <Hodowcy />}
+      {page === 2 && <Breeding />} 
+      {page === 3 && <Feed />} 
+      {page === 4 && <Farmers />}
       {page === 5 && <Indos />} 
       </StyledAppLayout>
     </>

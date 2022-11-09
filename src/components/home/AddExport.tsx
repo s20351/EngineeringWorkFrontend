@@ -82,7 +82,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                 </Select>
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="arrivalDate">Data zdawania</label>
+                <label htmlFor="arrivalDate">Data zdawania:</label>
                 <input
                   name="exportDate"
                   id="exportDate"
@@ -93,7 +93,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="numberMale">Ilość Indor</label>
+                <label htmlFor="numberMale">Ilość Indor:</label>
                 <input
                   name="numberMale"
                   id="numberMale"
@@ -104,7 +104,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="numberFemale">Ilość Indyczka</label>
+                <label htmlFor="numberFemale">Ilość Indyczka:</label>
                 <input
                   name="numberFemale"
                   id="numberFemale"
@@ -115,7 +115,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="numberFemale">Waga</label>
+                <label htmlFor="numberFemale">Waga:</label>
                 <input
                   name="weight"
                   id="weight"

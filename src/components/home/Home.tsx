@@ -12,7 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { StyledHomeLayout, StyledButton } from "./styledHome";
+import { StyledHomeLayout, StyledButton, H1, StyledLoadingInfo } from "./styledHome";
 import { AddFarm } from "./AddFarm";
 import { AddOrderHatchery } from "./AddOrderHatchery";
 import { AddCycle } from "./AddCycle";
@@ -26,6 +26,7 @@ function Home() {
   const [isAddOrderHatcheryOpen, setOrderHatcheryState] = React.useState(false);
   const [isDeleteFarmOpen, setDeleteFarmState] = React.useState(false);
   const [isExportOpen, setExportState] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const toggleAddFarm = () => setAddFarmState(!isAddFarmOpen);
   const toggleAddCycle = () => setAddCycleState(!isAddCycleOpen);
@@ -34,11 +35,25 @@ function Home() {
   const toggleDeleteFarm = () =>  setDeleteFarmState(!isDeleteFarmOpen);
   const toggleExport = () => setExportState(!isExportOpen);
 
+  const [homeScreen, setHomeScreen] = React.useState([]);
+
+  useEffect(() => {
+  const fetchData = async () =>{
+    const data = await getHomeDetailsById();
+    setHomeScreen(data);
+    setIsLoading(true);
+  }
+  fetchData()
+  .catch(console.error)
+  }, []);
+
   return (
     <div>
       <>
         <StyledHomeLayout>
-          {TableHome()}
+          <StyledLoadingInfo>
+          {TableHome(homeScreen, isLoading)}
+          </StyledLoadingInfo>
           <StyledButton variant="contained" onClick={() => toggleDeleteFarm()}>
             Usuń Fermę
           </StyledButton>
@@ -114,21 +129,11 @@ const tableContainerSx: SxProps = {
   borderRadius: 4,
 };
 
-export default function TableHome() {
-  const [homeScreen, setHomeScreen] = React.useState([]);
-
-  useEffect(() => {
-  const fetchData = async () =>{
-    const data = await getHomeDetailsById();
-    setHomeScreen(data);
-  }
-  fetchData()
-  .catch(console.error)
-  }, []);
+export function TableHome(homeScreen : any, isLoading : boolean) {
 
   const objects: Array<ObjectsHome> = homeScreen;
 
-  return (
+  return isLoading?(
     <TableContainer component={Paper} sx={tableContainerSx}>
       <Table stickyHeader={false}>
         <TableHead
@@ -179,7 +184,7 @@ export default function TableHome() {
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  ): <H1>Trwa ładowanie danych o bierzących cyklach ....</H1>;
 }
 
 export { Home };

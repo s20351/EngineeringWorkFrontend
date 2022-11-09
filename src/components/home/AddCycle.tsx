@@ -40,7 +40,6 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
       await getFarmsByFarmerId()
       .then((resp) => {
         setDataFarms(resp)
-        console.log(resp)
       })
     }
     fetchData()
@@ -97,7 +96,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 </Select>
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="description">Opis</label>
+                <label htmlFor="description">Opis:</label>
                 <input
                   name="description"
                   id="description"
@@ -108,7 +107,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="dateIn">Data Rozpoczęcia</label>
+                <label htmlFor="dateIn">Data Rozpoczęcia:</label>
                 <Select
                   labelId="custom-select-label"
                   id="custom-select"
@@ -121,7 +120,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 </Select>
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="endDate">Data Zakończenia</label>
+                <label htmlFor="endDate">Data Zakończenia:</label>
                 <input
                   name="endDate"
                   id="endDate"

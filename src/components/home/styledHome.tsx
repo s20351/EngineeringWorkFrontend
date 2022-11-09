@@ -7,6 +7,10 @@ const StyledHomeLayout = styled.div`
   align-items: center;
 `;
 
+const StyledLoadingInfo = styled.div`
+  align-items: center;
+`
+
 const StyledButton = styled(Button)`
   color: rgb(249, 228, 91);
   background-color: 	rgb(	43, 103, 119);
@@ -38,4 +42,4 @@ const H1 = styled.h1(
     props => ({ color: props.color })
   )
 
-export {StyledHomeLayout, StyledButton, StyledLi, StyledHome, H1}
+export {StyledHomeLayout, StyledButton, StyledLi, StyledHome, H1, StyledLoadingInfo}

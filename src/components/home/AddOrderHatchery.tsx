@@ -41,7 +41,6 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
       await getFarmsByFarmerId()
       .then((resp) => {
         setDataFarms(resp)
-        console.log(resp)
         setIsLoading(true)
       })
     }
@@ -88,7 +87,7 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
               </Select>
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="arrivalDate">Data przyjazdu</label>
+                <label htmlFor="arrivalDate">Data przyjazdu:</label>
                 <input
                   name="arrivalDate"
                   id="arrivalDate"
@@ -99,7 +98,7 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="numberMale">Ilość Indor</label>
+                <label htmlFor="numberMale">Ilość Indor:</label>
                 <input
                   name="numberMale"
                   id="numberMale"
@@ -110,7 +109,7 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                 />
               </StyledDiv>
               <StyledDiv>
-                <label htmlFor="numberFemale">Ilość Indyczka</label>
+                <label htmlFor="numberFemale">Ilość Indyczka:</label>
                 <input
                   name="numberFemale"
                   id="numberFemale"
