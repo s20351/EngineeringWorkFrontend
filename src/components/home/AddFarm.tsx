@@ -4,6 +4,7 @@ import { postNewFarm } from "../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddFarm";
 import "./styledAddFarm.css";
 import { useForm } from "./UseForm";
+import Swal from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -26,7 +27,26 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
     name: "",
   };
 
-  const { onChange, onSubmit } = useForm(initialState);
+  function alertDialogBox() {
+    if (name == "") {
+      Swal.fire({
+        title: 'Zła wartość w polu nazwa',
+        text: 'Musisz uzupełnić nazwę fermy ',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    } else {
+      Swal.fire({
+        title: 'Ferma została dodana',
+        icon: 'success',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+      postNewFarm(name);
+      onClose();
+    }
+  }
+
+  const { onSubmit } = useForm(initialState);
 
   return isOpen ? (
     <div className={"modal"}>
@@ -52,10 +72,9 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   type="text"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  required
                 />
               </StyledDiv>
-              <StyledButton type="submit" onClick={() => { postNewFarm(name); onClose();}} >Dodaj</StyledButton>
+              <StyledButton type="submit" onClick={() => { alertDialogBox() }} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

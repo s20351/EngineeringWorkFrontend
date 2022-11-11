@@ -4,8 +4,9 @@ import { StyledDiv, StyledFieldSet, StyledButton} from './styledAddOrderHatchery
 import { useForm } from "./UseForm";
 import "./styledAddFarm.css";
 import Select, {SelectChangeEvent} from '@mui/material/Select'
-import { deleteFarmByFarmId, getFarmsByFarmerId, postNewOrderHachery } from '../../services';
+import { getFarmsByFarmerId, postNewOrderHachery } from '../../services';
 import { MenuItem } from '@mui/material';
+import Swal, {SweetAlertOptions} from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -36,6 +37,8 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
   
   const { onChange, onSubmit } = useForm('');
 
+
+
   useEffect(() => {
     const fetchData = async () =>{
       await getFarmsByFarmerId()
@@ -51,6 +54,36 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
     const [arrivalDate, setArrivalDate] = useState<string>("");
     const [numberMale, setNumberMale] = useState<string>("");
     const [numberFemale, setNumberFemale] = useState<string>("");
+
+    function clearData(){
+      setFarm("");
+      setArrivalDate("");
+      setNumberFemale("");
+      setNumberMale("");
+    }
+
+    function alertDialogBox(){
+      if(farm == "" || arrivalDate == "" || numberMale == "" || numberFemale ==""){
+        Swal.fire({
+          title: 'Złe dane',
+          text: 'Musisz uzupełnić wszystkie pola',
+          icon: 'warning',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        });
+      }else{
+        Swal.fire({
+          title: 'Zamówienie zostało dodane',
+          icon: 'success',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        } as SweetAlertOptions).then((result) => {
+          if (result.value) {
+            postNewOrderHachery(farm, "1", arrivalDate, numberMale, numberFemale);
+            clearData()
+            onClose(); 
+          }
+        });
+      }
+    }
 
   return isOpen && isLoading ? (
     <div className={'modal'}>
@@ -79,7 +112,6 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
               id="custom-select"
               value = {farm}
               onChange={handleChange}
-              required
               >
                 {mappedFarms.map((mappedFarm) => {
                   return <MenuItem  key={mappedFarm.farmId} value={mappedFarm.farmId}>{mappedFarm.name}</MenuItem>
@@ -94,7 +126,6 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                   type="date"
                   value = {arrivalDate}
                   onChange={(event) => setArrivalDate(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -105,7 +136,6 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                   type="number"
                   value = {numberMale}
                   onChange={(event) => setNumberMale(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -116,11 +146,10 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                   type="number"
                   value = {numberFemale}
                   onChange={(event) => setNumberFemale(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledButton type="submit" 
-              onClick={() => {postNewOrderHachery(farm, "1", arrivalDate, numberMale, numberFemale); onClose();}}
+              onClick={() => {alertDialogBox();}}
               >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>

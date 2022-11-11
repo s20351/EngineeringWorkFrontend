@@ -5,6 +5,7 @@ import { StyledButton, StyledFieldSet } from "./styledDeleteFarm";
 import { useForm } from "./UseForm";
 import Select, {SelectChangeEvent} from '@mui/material/Select'
 import { MenuItem } from "@mui/material";
+import Swal, {SweetAlertOptions} from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -15,6 +16,7 @@ interface ModalProps {
 
 export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const outsideRef = React.useRef(null);
+  const [isLoading, setIsLoading] = React.useState(false)
   const handleCloseOnOverlay = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -33,6 +35,7 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
         await getFarmsByFarmerId()
         .then((resp) => {
           setDataFarms(resp)
+          setIsLoading(true)
         })
       }
       fetchData()
@@ -48,7 +51,32 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
     setFarm(event.target.value)
   }
 
-  return isOpen ? (
+  function alertDialogBox(){
+    if(farm == ""){
+      Swal.fire({
+        title: 'Zła wartość w polu nazwa fermy',
+        text: 'Musisz wybrać fermę do usunięcia',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    }else{
+      Swal.fire({
+        title: 'Czy na pewno chcesz usunąć fermę?',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+        showCancelButton: true,
+        confirmButtonText: 'Tak, usuń'
+      } as SweetAlertOptions).then((result) => {
+        if (result.value) {
+          deleteFarmByFarmId(farm); 
+          setFarm("")
+          onClose(); 
+        }
+      });
+    }
+  }
+
+  return isOpen&&isLoading? (
     <div className={"modal"}>
       <div
         ref={outsideRef}
@@ -75,7 +103,7 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
                   return <MenuItem  key={mappedFarm.farmId} value={mappedFarm.farmId}>{mappedFarm.name}</MenuItem>
                 })}
               </Select>
-              <StyledButton type="submit" onClick={() => {deleteFarmByFarmId(farm); onClose();}}>Usuń</StyledButton>
+              <StyledButton type="submit" onClick={() => { alertDialogBox(); }}>Usuń</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

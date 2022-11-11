@@ -5,6 +5,7 @@ import { StyledDiv, StyledFieldSet, StyledButton } from './styledAddCycle';
 import { useForm } from './UseForm';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { getFarmsByFarmerId, getHatcheryOrderdsByFarmId, postNewCycle } from '../../services';
+import Swal, {SweetAlertOptions} from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -33,13 +34,56 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
   const mappedFarms: Array<Farm> = dataFarms
   const [description, setDescription] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
+  const [orderHatcheryDate, setOrderHatcheryDate] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false)
   const mappedDeliveries: Array<Delivery> = orderHatcheryDateSelect
+
+  function clearData(){
+    setFarm("");
+    setorderHatcheryId("");
+    setDescription("");
+    setEndDate("");
+  }
+
+  function alertDialogBox(){
+    const [day, month, year] = orderHatcheryDate.split('/')
+    const dateIn = new Date(+year, +month - 1, +day)
+    const dateOut = new Date(endDate);
+    if(farm == "" || description == "" || orderHatcheryId == "" || endDate ==""){
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Musisz uzupełnić wszystkie pola',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    }else if(dateIn > dateOut){
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Data zakończenia nie może być przed datą rozpoczęcia...',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    }else{
+      Swal.fire({
+        title: 'Wstawienie zostało dodane',
+        icon: 'success',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      } as SweetAlertOptions).then((result) => {
+        if (result.value) {
+          postNewCycle(farm, description, endDate, orderHatcheryId); 
+          onClose(); 
+          clearData();
+        }
+      });
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () =>{
       await getFarmsByFarmerId()
       .then((resp) => {
         setDataFarms(resp)
+        setIsLoading(true)
       })
     }
     fetchData()
@@ -55,6 +99,8 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
 
   const handleDateChange = async (event: SelectChangeEvent<string>, child: React.ReactNode) => {
     setorderHatcheryId(event.target.value)
+    let date = mappedDeliveries.find(x => x.deliveryID == event.target.value)!
+    setOrderHatcheryDate(date?.date)
   }
 
   interface Delivery{
@@ -62,7 +108,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
     date: string
     }
 
-  return isOpen ? (
+  return isOpen&&isLoading ? (
     <div className={'modal'}>
       <div
         ref={outsideRef}
@@ -103,7 +149,6 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                   type="description"
                   value = {description}
                   onChange= {(event) => setDescription(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -130,7 +175,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 />
               </StyledDiv>
               <StyledButton type="submit" 
-              onClick={() => {postNewCycle(farm, description, endDate, orderHatcheryId); onClose();}}>Dodaj</StyledButton>
+              onClick={() => {alertDialogBox();}}>Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

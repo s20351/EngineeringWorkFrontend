@@ -35,11 +35,11 @@ const StyledHome = styled.ul`
   margin: 0.0em 0.0em 0.0em 0.0em;
   padding: 0em 1em 0em 0em;
 `;
-const H1 = styled.h1(
-    {
-      fontSize: 17
-    },
-    props => ({ color: props.color })
-  )
+const H1 = styled.h1`
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export {StyledHomeLayout, StyledButton, StyledLi, StyledHome, H1, StyledLoadingInfo}

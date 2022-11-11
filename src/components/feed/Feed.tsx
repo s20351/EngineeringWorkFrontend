@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useMemo } from "react";
 import {  getFeedDetailsByFarmerId, getFeedEventsByFarmerId } from "../../services";
 import { OrderFeed } from "./AddOrderFeed";
-import { StyledButton, StyledDiv } from "./styledFeed";
+import { StyledButton, StyledDiv, H1 } from "./styledFeed";
 import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import format from "date-fns/format";
@@ -27,6 +27,7 @@ function Feed(){
   const toggleFeedOrderState = () =>  setOrderFeedState(!isFeedOrderOpen);
   const [allEvents, setAllEvents] = React.useState([]);
   const [feed, setFeed] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   useEffect(() => {
     const fetchData = async () =>{
@@ -34,6 +35,7 @@ function Feed(){
       setAllEvents(dataCalendar)
       const data = await getFeedDetailsByFarmerId();
       setFeed(data);
+      setIsLoading(true);
     }
     fetchData()
     .catch(console.error)
@@ -42,7 +44,7 @@ function Feed(){
 
     return (
       <StyledDiv>
-      {TableFeed(feed)}
+      {TableFeed(feed, isLoading)}
       <StyledButton variant="contained" onClick={() => toggleFeedOrderState()}>
             Dodaj zamówienie paszy
       </StyledButton>
@@ -61,7 +63,7 @@ function Feed(){
     );
   };
 
-  export function TableFeed(feed: any) {
+  export function TableFeed(feed: any, isLoading: boolean) {
     interface ObjectsFeed {
       objectID: number;
       farmName: string;
@@ -81,7 +83,8 @@ function Feed(){
       borderRadius: 4,
     };
 
-    return (
+    return isLoading ? (
+      objects.length > 0 ?
       <TableContainer component={Paper} sx={tableContainerSx}>
         <Table stickyHeader={false}>
           <TableHead
@@ -123,8 +126,8 @@ function Feed(){
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-    );
+      </TableContainer> : <H1>Brak zamówień paszy do wyświetlenia</H1>
+    ) : <H1>Trwa ładowanie danych o zamówieniach paszy...</H1>;
   }
 
  function getCalendar(allEvents: any){

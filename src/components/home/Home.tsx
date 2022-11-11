@@ -134,6 +134,8 @@ export function TableHome(homeScreen : any, isLoading : boolean) {
   const objects: Array<ObjectsHome> = homeScreen;
 
   return isLoading?(
+
+    objects.length > 0 ?
     <TableContainer component={Paper} sx={tableContainerSx}>
       <Table stickyHeader={false}>
         <TableHead
@@ -169,7 +171,7 @@ export function TableHome(homeScreen : any, isLoading : boolean) {
             },
           }}
         >
-        {
+        { 
         objects.map((object)=> (
             <TableRow>
               <TableCell align="center">{object.objectName}</TableCell>
@@ -183,8 +185,8 @@ export function TableHome(homeScreen : any, isLoading : boolean) {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
-  ): <H1>Trwa ładowanie danych o bierzących cyklach ....</H1>;
+    </TableContainer> : <H1>Brak ferm do wyświetlenia</H1>
+  ): <H1>Trwa ładowanie danych o bieżących cyklach ....</H1>;
 }
 
 export { Home };

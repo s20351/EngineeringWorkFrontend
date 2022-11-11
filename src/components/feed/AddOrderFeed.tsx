@@ -4,6 +4,7 @@ import iconX from "../../assets/x.jpg";
 import { getFarmsByFarmerId, postNewOrderFeed } from "../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledOrderFeed";
 import { useForm } from "./UseForm";
+import Swal from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -34,6 +35,25 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   };
   const [arrivalDate, setArrivalDate] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
+
+  function alertDialogBox() {
+    if (farm == "" || arrivalDate == "" || weight == "") {
+      Swal.fire({
+        title: 'Zła dane',
+        text: 'Musisz uzupełnić wszystkie pola',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    } else {
+      Swal.fire({
+        title: 'Zamówienie paszy zostało dodane',
+        icon: 'success',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+      postNewOrderFeed(farm,'1', arrivalDate, weight); 
+      onClose();
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () =>{
@@ -72,7 +92,6 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
               id="custom-select"
               value = {farm}
               onChange={handleChange}
-              required
               >
                 {mappedFarms.map((mappedFarm) => {
                   return <MenuItem  key={mappedFarm.farmId} value={mappedFarm.farmId}>{mappedFarm.name}</MenuItem>
@@ -87,7 +106,6 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   type="date"
                   value = {arrivalDate}
                   onChange={(event) => setArrivalDate(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -98,10 +116,9 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   type="number"
                   value = {weight}
                   onChange={(event) => setWeight(event.target.value)}
-                  required
                 />
               </StyledDiv>
-              <StyledButton type="submit" onClick={() => { postNewOrderFeed(farm,'1', arrivalDate, weight); onClose();}} >Dodaj</StyledButton>
+              <StyledButton type="submit" onClick={() => { alertDialogBox();}} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

@@ -3,6 +3,7 @@ import iconX from "../../assets/x.jpg";
 import { getFarmsByFarmerId, postNewDelivery } from "../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddDelivery";
 import { useForm } from "./UseForm";
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -28,12 +29,32 @@ export const DeliveryIndos: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
     const fetchData = async () =>{
       await getFarmsByFarmerId()
       .then((resp) => {
+        
         setIsLoading(true)
       })
     }
     fetchData()
     .catch(console.error)
     }, []);
+
+    function alertDialogBox() {
+      if (arrivalDate == "" || weight == "") {
+        Swal.fire({
+          title: 'Złe dane',
+          text: 'Musisz uzupełnić wszystkie pola',
+          icon: 'warning',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        });
+      } else {
+        Swal.fire({
+          title: 'Dostawa została dodana',
+          icon: 'success',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        });
+        postNewDelivery(arrivalDate, weight); 
+        onClose();
+      }
+    }
 
   const { onChange, onSubmit } = useForm('');
 
@@ -61,7 +82,6 @@ export const DeliveryIndos: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
                   type="date"
                   value = {arrivalDate}
                   onChange={(event) => setArrivalDate(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -72,10 +92,9 @@ export const DeliveryIndos: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
                   type="number"
                   value = {weight}
                   onChange={(event) => setWeight(event.target.value)}
-                  required
                 />
               </StyledDiv>
-              <StyledButton type="submit" onClick={() => { postNewDelivery(arrivalDate, weight); onClose();}} >Dodaj</StyledButton>
+              <StyledButton type="submit" onClick={() => { alertDialogBox(); }} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

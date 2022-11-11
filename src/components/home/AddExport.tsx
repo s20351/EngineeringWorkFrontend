@@ -1,9 +1,10 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import iconX from "../../assets/x.jpg";
-import { getCycleByFarmerId, postNewExport, postNewFarm } from "../../services";
+import { getCycleByFarmerId, postNewExport } from "../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddExport";
 import { useForm } from "./UseForm";
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -12,14 +13,14 @@ interface ModalProps {
   children: any;
 }
 
-interface Cycle{
-    cycleId: string,
-    cycleDescription: string
-    }
+interface Cycle {
+  cycleId: string,
+  cycleDescription: string,
+  endCycleDate: string
+}
 
 export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const outsideRef = React.useRef(null);
-  const [name, setName] = useState<string>("");
   const handleCloseOnOverlay = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -36,23 +37,69 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const [numberMale, setNumberMale] = useState<string>("");
   const [numberFemale, setNumberFemale] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [cycleEndDate, setcycleEndDate] = React.useState("");
+
+  function clearData() {
+    setCycle("");
+    setExportDate("");
+    setNumberMale("");
+    setNumberFemale("");
+    setWeight("");
+  }
 
   useEffect(() => {
-    const fetchData = async () =>{
+    const fetchData = async () => {
       await getCycleByFarmerId()
-      .then((resp) => {
-        setDataCycles(resp)
-      })
+        .then((resp) => {
+          setDataCycles(resp)
+          setIsLoading(true)
+        })
     }
     fetchData()
-    .catch(console.error)
-    }, []);
+      .catch(console.error)
+  }, []);
 
-    const handleChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
-        setCycle(event.target.value)
-      }
-    
-  return isOpen ? (
+  const handleChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
+    setCycle(event.target.value)
+    let cycle = mappedCycles.find(x => x.cycleId == event.target.value)!
+    setcycleEndDate(cycle.endCycleDate)
+  }
+
+  function alertDialogBox() {
+    const endCycleDate = new Date(cycleEndDate)
+    const chosenExportDate = new Date(exportDate)
+
+    if (cycle == "" || exportDate == "" || numberMale == "" || numberFemale == "") {
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Musisz uzupełnić wszystkie pola',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+      });
+    } else if (endCycleDate < chosenExportDate) {
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Data zdawania nie może być później niż koniec cyklu...',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+      });
+    } else {
+      Swal.fire({
+        title: 'Zdawanie zostało dodane',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+      } as SweetAlertOptions).then((result) => {
+        if (result.value) {
+          postNewExport(cycle, exportDate, numberMale, numberFemale, weight);
+          onClose();
+          clearData();
+        }
+      });
+    }
+  }
+
+  return isOpen && isLoading ? (
     <div className={"modal"}>
       <div
         ref={outsideRef}
@@ -70,15 +117,15 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
             <StyledFieldSet>
               <StyledDiv>
                 <label htmlFor="nazwa">Nazwa cyklu:</label>
-                    <Select
-                        labelId = "custom-select-label"
-                        id="custom-select"
-                        value = {cycle}
-                        onChange={handleChange}
-                        >
-                    {mappedCycles.map((mappedCycle) => {
-                    return <MenuItem  key={mappedCycle.cycleId} value={mappedCycle.cycleId}>{mappedCycle.cycleDescription}</MenuItem>
-                    })}
+                <Select
+                  labelId="custom-select-label"
+                  id="custom-select"
+                  value={cycle}
+                  onChange={handleChange}
+                >
+                  {mappedCycles.map((mappedCycle) => {
+                    return <MenuItem key={mappedCycle.cycleId} value={mappedCycle.cycleId}>{mappedCycle.cycleDescription}</MenuItem>
+                  })}
                 </Select>
               </StyledDiv>
               <StyledDiv>
@@ -87,9 +134,8 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   name="exportDate"
                   id="exportDate"
                   type="date"
-                  value = {exportDate}
+                  value={exportDate}
                   onChange={(event) => setExportDate(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -98,9 +144,8 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   name="numberMale"
                   id="numberMale"
                   type="number"
-                  value = {numberMale}
+                  value={numberMale}
                   onChange={(event) => setNumberMale(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -109,9 +154,8 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   name="numberFemale"
                   id="numberFemale"
                   type="number"
-                  value = {numberFemale}
+                  value={numberFemale}
                   onChange={(event) => setNumberFemale(event.target.value)}
-                  required
                 />
               </StyledDiv>
               <StyledDiv>
@@ -120,13 +164,12 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   name="weight"
                   id="weight"
                   type="number"
-                  value = {weight}
+                  value={weight}
                   onChange={(event) => setWeight(event.target.value)}
-                  required
                 />
               </StyledDiv>
-              <StyledButton type="submit" 
-              onClick={() => { postNewExport(cycle, exportDate, numberMale, numberFemale, weight); onClose();}} >Dodaj</StyledButton>
+              <StyledButton type="submit"
+                onClick={() => { alertDialogBox() }} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

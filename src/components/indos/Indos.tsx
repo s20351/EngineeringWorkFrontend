@@ -12,7 +12,7 @@ import {  getDeliveries, getDeliveryEvents, getFeedEventsByFarmerId } from "../.
 import React, { useEffect, useMemo } from "react";
 import {  } from "../../services";
 import { DeliveryIndos } from "./AddDelivery";
-import { StyledButton, StyledDiv } from "./styledIndos";
+import { StyledButton, StyledDiv, H1 } from "./styledIndos";
 import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import format from "date-fns/format";
@@ -28,6 +28,7 @@ function Indos(){
   const toggleIndosOrderState = () =>  setOrderIndosState(!isIndosOrderOpen);
   const [allEvents, setAllEvents] = React.useState([]);
   const [deliveries, setDeliveries] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   useEffect(() => {
     const fetchData = async () =>{
@@ -35,6 +36,7 @@ function Indos(){
       setAllEvents(dataCalendar)
       const deliveriesData = await getDeliveries();
       setDeliveries(deliveriesData);
+      setIsLoading(true);
     }
     fetchData()
     .catch(console.error)
@@ -43,7 +45,7 @@ function Indos(){
 
     return (
       <StyledDiv>
-      {TableIndos(deliveries)}
+      {TableIndos(deliveries, isLoading)}
       <StyledButton variant="contained" onClick={() => toggleIndosOrderState()}>
             Dodaj zamówienie od obcego hodowcy
       </StyledButton>
@@ -62,7 +64,7 @@ function Indos(){
     );
   };
 
-  export function TableIndos(deliveries: any) {
+  export function TableIndos(deliveries: any, isLoading: boolean) {
     interface Delivery {
       date: Date;
       name: string;
@@ -82,7 +84,8 @@ function Indos(){
       borderRadius: 4,
     };
 
-    return (
+    return isLoading? (
+      objects.length > 0 ?
       <TableContainer component={Paper} sx={tableContainerSx}>
         <Table stickyHeader={false}>
           <TableHead
@@ -126,8 +129,8 @@ function Indos(){
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-    );
+      </TableContainer> : <H1>Brak dostaw do wyświetlenia</H1>
+    ): <H1>Trwa ładowanie danych o dostawach...</H1>;
   }
 
  function getCalendar(allEvents: any){

@@ -27,4 +27,11 @@ const StyledDiv = styled.div`
   z-index: 1000;
 `;
 
-export { StyledButton, StyledLi, StyledDiv}
+const H1 = styled.h1(
+    {
+      fontSize: 17
+    },
+    props => ({ color: props.color })
+  )
+
+export { StyledButton, StyledLi, StyledDiv, H1}
