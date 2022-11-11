@@ -118,7 +118,7 @@ function Feed(){
           >
           {
           objects.map((object)=> (
-              <TableRow>
+              <TableRow key={object.objectID} >
                 <TableCell align="center">{object.farmName}</TableCell>
                 <TableCell align="center">{object.arrivalDate.toString()}</TableCell>
                 <TableCell align="center">{object.weight}</TableCell>

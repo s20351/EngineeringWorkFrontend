@@ -32,19 +32,19 @@ function Home() {
   const toggleAddCycle = () => setAddCycleState(!isAddCycleOpen);
   const toggleAddOrderHatchery = () =>
     setOrderHatcheryState(!isAddOrderHatcheryOpen);
-  const toggleDeleteFarm = () =>  setDeleteFarmState(!isDeleteFarmOpen);
+  const toggleDeleteFarm = () => setDeleteFarmState(!isDeleteFarmOpen);
   const toggleExport = () => setExportState(!isExportOpen);
 
   const [homeScreen, setHomeScreen] = React.useState([]);
 
   useEffect(() => {
-  const fetchData = async () =>{
-    const data = await getHomeDetailsById();
-    setHomeScreen(data);
-    setIsLoading(true);
-  }
-  fetchData()
-  .catch(console.error)
+    const fetchData = async () => {
+      const data = await getHomeDetailsById();
+      setHomeScreen(data);
+      setIsLoading(true);
+    }
+    fetchData()
+      .catch(console.error)
   }, []);
 
   return (
@@ -52,7 +52,7 @@ function Home() {
       <>
         <StyledHomeLayout>
           <StyledLoadingInfo>
-          {TableHome(homeScreen, isLoading)}
+            {TableHome(homeScreen, isLoading)}
           </StyledLoadingInfo>
           <StyledButton variant="contained" onClick={() => toggleDeleteFarm()}>
             Usuń Fermę
@@ -73,15 +73,15 @@ function Home() {
             Dodaj Zdawanie
           </StyledButton>
           <AddExport
-          title = {"Dodaj zdawanie"}
-          isOpen={isExportOpen}
-          onClose={toggleExport}
+            title={"Dodaj zdawanie"}
+            isOpen={isExportOpen}
+            onClose={toggleExport}
           >
           </AddExport>
           <DeleteFarm
-          title = {"Usuń Fermę"}
-          isOpen={isDeleteFarmOpen}
-          onClose={toggleDeleteFarm}
+            title={"Usuń Fermę"}
+            isOpen={isDeleteFarmOpen}
+            onClose={toggleDeleteFarm}
           >
           </DeleteFarm>
           <AddFarm
@@ -117,6 +117,7 @@ interface ObjectsHome {
   deadFemale: number;
   breedingDay: number;
   daysToExport: number;
+  isDuringCycle: boolean;
 }
 
 const tableContainerSx: SxProps = {
@@ -129,64 +130,57 @@ const tableContainerSx: SxProps = {
   borderRadius: 4,
 };
 
-export function TableHome(homeScreen : any, isLoading : boolean) {
+export function TableHome(homeScreen: any, isLoading: boolean) {
 
   const objects: Array<ObjectsHome> = homeScreen;
 
-  return isLoading?(
-
+  return isLoading ? (
     objects.length > 0 ?
-    <TableContainer component={Paper} sx={tableContainerSx}>
-      <Table stickyHeader={false}>
-        <TableHead
-          sx={{
-            "& th": {
-              backgroundColor: "rgb(27, 77, 137)",
-              fontSize: "1.2rem",
-            },
-          }}
-        >
-          <TableRow
+      <TableContainer component={Paper} sx={tableContainerSx}>
+        <Table stickyHeader={false}>
+          <TableHead
             sx={{
-              backgroundColor: "rgb(27, 77, 137)",
-              borderBottom: "2px solid black",
               "& th": {
-                color: "rgb(249, 228, 91)",
+                backgroundColor: "rgb(27, 77, 137)",
+                fontSize: "1.2rem",
               },
             }}
           >
-            <TableCell>Nazwa Obiektu</TableCell>
-            <TableCell>Stan Indor</TableCell>
-            <TableCell>Stan Indyczka</TableCell>
-            <TableCell>Zgonów Indor</TableCell>
-            <TableCell>Zgonów Indyczka</TableCell>
-            <TableCell>Dzień hodowli</TableCell>
-            <TableCell>Dni do zdawania</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody
-          sx={{
-            "& tr:nth-of-type(2n+1)": {
-              backgroundColor: "grey.100",
-            },
-          }}
-        >
-        { 
-        objects.map((object)=> (
-            <TableRow>
-              <TableCell align="center">{object.objectName}</TableCell>
-              <TableCell align="center">{object.aliveMale}</TableCell>
-              <TableCell align="center">{object.aliveFemale}</TableCell>
-              <TableCell align="center">{object.deadMale}</TableCell>
-              <TableCell align="center">{object.deadFemale}</TableCell>
-              <TableCell align="center">{object.breedingDay}</TableCell>
-              <TableCell align="center">{object.daysToExport}</TableCell>
+            <TableRow
+              sx={{
+                backgroundColor: "rgb(27, 77, 137)",
+                borderBottom: "2px solid black",
+                "& th": {
+                  color: "rgb(249, 228, 91)",
+                },
+              }}
+            >
+              <TableCell>Nazwa Obiektu</TableCell>
+              <TableCell>Stan Indor</TableCell>
+              <TableCell>Stan Indyczka</TableCell>
+              <TableCell>Zgonów Indor</TableCell>
+              <TableCell>Zgonów Indyczka</TableCell>
+              <TableCell>Dzień hodowli</TableCell>
+              <TableCell>Dni do zdawania</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer> : <H1>Brak ferm do wyświetlenia</H1>
-  ): <H1>Trwa ładowanie danych o bieżących cyklach ....</H1>;
+          </TableHead>
+          <TableBody>
+            {
+              objects.map((object) => (
+                <TableRow key={object.objectID} style={object.isDuringCycle ? { background: '	white' } : { background: 'rgb(208,208,208)' }}>
+                  <TableCell align="center">{object.objectName}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? object.aliveMale : '-'}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? object.aliveFemale : '-'}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? object.deadMale : '-'}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? object.deadFemale : '-'}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? object.breedingDay : '-'}</TableCell>
+                  <TableCell align="center">{object.isDuringCycle ? (object.daysToExport == -1 ? 'brak zdawania' : object.daysToExport) : '-'}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer> : <H1>Brak ferm do wyświetlenia</H1>
+  ) : <H1>Trwa ładowanie danych o bieżących cyklach ....</H1>;
 }
 
 export { Home };

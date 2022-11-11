@@ -8,7 +8,7 @@ import {
   SxProps,
   Paper
 } from "@mui/material";
-import {  getDeliveries, getDeliveryEvents, getFeedEventsByFarmerId } from "../../services";
+import {  getDeliveries, getDeliveryEvents } from "../../services";
 import React, { useEffect, useMemo } from "react";
 import {  } from "../../services";
 import { DeliveryIndos } from "./AddDelivery";
@@ -85,7 +85,7 @@ function Indos(){
     };
 
     return isLoading? (
-      objects.length > 0 ?
+      objects.length > 0 ? 
       <TableContainer component={Paper} sx={tableContainerSx}>
         <Table stickyHeader={false}>
           <TableHead
@@ -120,7 +120,7 @@ function Indos(){
           >
           {
           objects.map((object)=> (
-              <TableRow>
+              <TableRow key={`${object.name} + ${object.surname} + ${object.date} `} >
                 <TableCell align="center">{object.date.toString()}</TableCell>
                 <TableCell align="center">{object.name}</TableCell>
                 <TableCell align="center">{object.surname}</TableCell>

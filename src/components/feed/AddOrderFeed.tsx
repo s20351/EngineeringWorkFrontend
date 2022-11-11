@@ -39,7 +39,7 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   function alertDialogBox() {
     if (farm == "" || arrivalDate == "" || weight == "") {
       Swal.fire({
-        title: 'Zła dane',
+        title: 'Złe dane',
         text: 'Musisz uzupełnić wszystkie pola',
         icon: 'warning',
         confirmButtonColor: 'rgb(43, 103, 119)',

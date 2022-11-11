@@ -19,7 +19,7 @@ const StyledButton = styled(Button)`
   border: 1px solid black;
   width: 5rem;
   height: 2rem;
-  margin-top: 0,6rem;
+  margin-top: 0.6rem;
   align-items: center;
 `;
 
