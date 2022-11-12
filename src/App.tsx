@@ -1,26 +1,19 @@
-import { useState } from "react";
-import { Router, Route, Routes } from "react-router";
-import { NavBar, Home, Indos, Feed, Farmers, Breeding } from "./components";
-import { StyledAppLayout } from "./styledApp";
+import { useContext } from "react";
+import { Route, Routes } from "react-router";
+import { LoginPage } from "./pages/Login/";
+import { NavBar } from "./components";
+import { HomePage } from "./pages/HomePage/HomePage";
+import { FarmerContext } from "./providers/FarmerDataProvider";
 
 function App() {
-  const [page, setPage] = useState(0);
+  const { data, setData } = useContext(FarmerContext);
 
-  const handlePageChange = (pageNumber: number): void => {
-    setPage(pageNumber);
-  };
-
+  console.log(data);
   return (
-    <>
-      <NavBar handleChangePage={handlePageChange} />
-      <StyledAppLayout>
-        {page === 1 && <Home />}
-        {page === 2 && <Breeding />}
-        {page === 3 && <Feed />}
-        {page === 4 && <Farmers />}
-        {page === 5 && <Indos />}
-      </StyledAppLayout>
-    </>
+    <Routes>
+      <Route index element={<LoginPage />} />
+      <Route path="home" element={<HomePage />} />
+    </Routes>
   );
 }
 
