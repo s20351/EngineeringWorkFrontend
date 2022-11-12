@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router";
-import { LoginPage } from "./pages/Login/LoginPage";
+import { LoginPage } from "./pages/Login/";
 import { NavBar } from "./components";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { FarmerContext } from "./providers/FarmerDataProvider";

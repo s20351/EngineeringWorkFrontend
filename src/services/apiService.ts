@@ -2,7 +2,7 @@ import { ExecOptionsWithStringEncoding } from "child_process";
 import { useContext } from "react";
 import { FarmerContext } from "../providers/FarmerDataProvider";
 
-const { data, setData } = useContext(FarmerContext);
+//const { data, setData } = useContext(FarmerContext);
 
 export const getHomeDetailsById = async () => {
   const rawData = await fetch(

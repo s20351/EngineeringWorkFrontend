@@ -10,10 +10,6 @@ const HomePage = (): ReactElement => {
     setPage(pageNumber);
   };
 
-  localStorage.setItem("farmerId", JSON.stringify(1));
-  sessionStorage.setItem("farmerId", JSON.stringify(1));
-  console.log(localStorage.getItem("farmerId"));
-
   return (
     <>
       <NavBar handleChangePage={handlePageChange} />
