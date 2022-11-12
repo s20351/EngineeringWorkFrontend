@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
-
 const StyledFieldSet = styled.fieldset`
   display: flex;
   flex-direction: column;
@@ -8,7 +7,7 @@ const StyledFieldSet = styled.fieldset`
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 16rem;
+  width: 23rem;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 `;
@@ -22,4 +21,5 @@ const StyledButton = styled(Button)`
   margin-top: 0.6rem;
   align-items: center;
 `;
+
 export { StyledFieldSet, StyledDiv, StyledButton };

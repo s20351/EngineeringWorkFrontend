@@ -6,6 +6,7 @@ interface NavBarProps {
 
 const NavBar = ({ handleChangePage }: NavBarProps) => {
   return (
+    
     <StyledNavBar>
       <StyledLi>
         <StyledButton variant="contained" onClick={() => handleChangePage(1)}>

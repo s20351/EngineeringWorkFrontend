@@ -101,6 +101,20 @@ body: JSON.stringify({
 })
 };
 
+export const postDeathsByFarmId = async (
+  farmId: string,
+  deathsMale: string,
+  deathsFemale: string,
+) => {
+await fetch(`http://localhost:5228/api/Farms/AddDeaths/${farmId}`, {
+method: "POST",
+headers: {'Content-Type':'application/json'},
+body: JSON.stringify({
+  deathsMale,
+  deathsFemale})
+})
+};
+
 export const getCycleByFarmerId = async () => {
   const rawData = await fetch(`http://localhost:5228/api/Cycle/1`);
   const data = await rawData.json();

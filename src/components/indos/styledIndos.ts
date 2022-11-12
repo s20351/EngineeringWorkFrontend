@@ -28,7 +28,7 @@ const StyledDiv = styled.div`
 `;
 
 const H1 = styled.h1`
-  font-size: 17px;
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;

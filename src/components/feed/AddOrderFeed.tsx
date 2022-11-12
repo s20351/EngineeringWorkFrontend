@@ -44,6 +44,13 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
         icon: 'warning',
         confirmButtonColor: 'rgb(43, 103, 119)',
       });
+    } else if (parseInt(weight) < 0) {
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Waga nie może być ujemna',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
     } else {
       Swal.fire({
         title: 'Zamówienie paszy zostało dodane',
@@ -90,6 +97,11 @@ export const OrderFeed: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
               <Select
               labelId = "custom-select-label"
               id="custom-select"
+              sx={{
+                position: 'sticky',
+                width: '50%',
+                height: '2rem',
+              }}
               value = {farm}
               onChange={handleChange}
               >

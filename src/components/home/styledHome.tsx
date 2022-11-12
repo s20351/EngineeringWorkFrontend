@@ -36,7 +36,7 @@ const StyledHome = styled.ul`
   padding: 0em 1em 0em 0em;
 `;
 const H1 = styled.h1`
-  font-size: 17px;
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;

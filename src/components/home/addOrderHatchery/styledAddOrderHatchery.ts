@@ -8,10 +8,11 @@ const StyledFieldSet = styled.fieldset`
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 16rem;
+  width: 23rem;
   justify-content: space-between;
   margin-bottom: 0.5rem;
 `;
+
 
 const StyledButton = styled(Button)`
   color: rgb(249, 228, 91);

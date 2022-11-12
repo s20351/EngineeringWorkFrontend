@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import iconX from "../../assets/x.jpg";
-import { deleteFarmByFarmId, getFarmsByFarmerId } from "../../services";
+import iconX from "../../../assets/x.jpg";
+import { deleteFarmByFarmId, getFarmsByFarmerId } from "../../../services";
 import { StyledButton, StyledFieldSet } from "./styledDeleteFarm";
-import { useForm } from "./UseForm";
+import { useForm } from "../UseForm";
 import Select, {SelectChangeEvent} from '@mui/material/Select'
 import { MenuItem } from "@mui/material";
 import Swal, {SweetAlertOptions} from 'sweetalert2';

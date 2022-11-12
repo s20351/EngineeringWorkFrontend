@@ -1,9 +1,9 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import iconX from "../../assets/x.jpg";
-import { getCycleByFarmerId, postNewExport } from "../../services";
+import iconX from "../../../assets/x.jpg";
+import { getCycleByFarmerId, postNewExport } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddExport";
-import { useForm } from "./UseForm";
+import { useForm } from "../UseForm";
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 interface ModalProps {
@@ -17,6 +17,7 @@ interface Cycle {
   cycleId: string,
   cycleDescription: string,
   endCycleDate: string
+  startCycleDate: string
 }
 
 export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
@@ -39,6 +40,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const [weight, setWeight] = useState<string>("");
   const [isLoading, setIsLoading] = React.useState(false)
   const [cycleEndDate, setcycleEndDate] = React.useState("");
+  const [cycleStartDate, setcycleStartDate] = React.useState("");
 
   function clearData() {
     setCycle("");
@@ -64,10 +66,12 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
     setCycle(event.target.value)
     let cycle = mappedCycles.find(x => x.cycleId == event.target.value)!
     setcycleEndDate(cycle.endCycleDate)
+    setcycleStartDate(cycle.startCycleDate)
   }
 
   function alertDialogBox() {
     const endCycleDate = new Date(cycleEndDate)
+    const startCycleDate = new Date (cycleStartDate);
     const chosenExportDate = new Date(exportDate)
 
     if (cycle == "" || exportDate == "" || numberMale == "" || numberFemale == "") {
@@ -77,7 +81,14 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
         icon: 'warning',
         confirmButtonColor: '#3085d6',
       });
-    } else if (endCycleDate < chosenExportDate) {
+    } else if (startCycleDate > chosenExportDate) {
+      Swal.fire({
+        title: 'Złe dane',
+        text: 'Data zdawania nie może być wcześniej niż początek cyklu...',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+      });
+    }else if (endCycleDate < chosenExportDate) {
       Swal.fire({
         title: 'Złe dane',
         text: 'Data zdawania nie może być później niż koniec cyklu...',
@@ -120,6 +131,11 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                 <Select
                   labelId="custom-select-label"
                   id="custom-select"
+                  sx={{
+                    position: 'sticky',
+                    width: '54%',
+                    height: '2rem',
+                  }}
                   value={cycle}
                   onChange={handleChange}
                 >

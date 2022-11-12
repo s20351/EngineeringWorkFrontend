@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import iconX from '../../assets/x.jpg';
-import './styledAddFarm.css';
+import iconX from '../../../assets/x.jpg';
 import { StyledDiv, StyledFieldSet, StyledButton } from './styledAddCycle';
-import { useForm } from './UseForm';
+import { useForm } from '../UseForm';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { getFarmsByFarmerId, getHatcheryOrderdsByFarmId, postNewCycle } from '../../services';
+import { getFarmsByFarmerId, getHatcheryOrderdsByFarmId, postNewCycle } from '../../../services';
 import Swal, {SweetAlertOptions} from 'sweetalert2';
 
 interface ModalProps {
@@ -133,6 +132,11 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 <Select
                   labelId="custom-select-label"
                   id="custom-select"
+                  sx={{
+                    position: 'sticky',
+                    width: '46%',
+                    height: '2rem',
+                  }}
                   value={farm}
                   onChange={handleFarmChange}
                 >
@@ -156,6 +160,11 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
                 <Select
                   labelId="custom-select-label"
                   id="custom-select"
+                  sx={{
+                    position: 'sticky',
+                    width: '46%',
+                    height: '2rem',
+                  }}
                   value={orderHatcheryId}
                   onChange={handleDateChange}
                 >

@@ -13,14 +13,15 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { StyledHomeLayout, StyledButton, H1, StyledLoadingInfo } from "./styledHome";
-import { AddFarm } from "./AddFarm";
-import { AddOrderHatchery } from "./AddOrderHatchery";
-import { AddCycle } from "./AddCycle";
-import { DeleteFarm } from "./DeleteFarm"
+import { AddFarm } from "./addFarm/AddFarm";
+import { AddOrderHatchery } from "./addOrderHatchery/AddOrderHatchery";
+import { AddCycle } from "./addCycle/AddCycle";
+import { DeleteFarm } from "./deleteFarm/DeleteFarm"
 import { getHomeDetailsById } from "../../services";
-import { AddExport } from "./AddExport";
+import { AddExport } from "./addExport/AddExport";
+import { CycleDetails } from "./cycleDetails/CycleDetails";
 
-function Home() {
+const Home: React.FC = () => {
   const [isAddFarmOpen, setAddFarmState] = React.useState(false);
   const [isAddCycleOpen, setAddCycleState] = React.useState(false);
   const [isAddOrderHatcheryOpen, setOrderHatcheryState] = React.useState(false);
@@ -34,8 +35,23 @@ function Home() {
     setOrderHatcheryState(!isAddOrderHatcheryOpen);
   const toggleDeleteFarm = () => setDeleteFarmState(!isDeleteFarmOpen);
   const toggleExport = () => setExportState(!isExportOpen);
-
   const [homeScreen, setHomeScreen] = React.useState([]);
+
+  const [farmDetailsID, setFarmDetailsID] = React.useState('');
+  const [isFarmDetailsOpen, setFarmDetailsState] = React.useState(false);
+  const toggleFarmDetails = () => setFarmDetailsState(!isFarmDetailsOpen);
+
+  const [currentNumberMale, setCurrentNumberMale] = React.useState(0);
+  const [currentNumberFemale, setCurrentNumberFemale] = React.useState(0);
+
+  const handleRowClick = (isDuringCycle: boolean, objectID : string, currentNumberMale: number, currentNumberFemale: number) => {
+    if(isDuringCycle){
+      setFarmDetailsID(objectID)
+      setCurrentNumberMale(currentNumberMale)
+      setCurrentNumberFemale(currentNumberFemale)
+      toggleFarmDetails()
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,11 +118,19 @@ function Home() {
             onClose={toggleAddCycle}
           >
           </AddCycle>
+          <CycleDetails
+            title={"Szczegóły hodowli"}
+            farmDetailsID = {farmDetailsID}
+            currentNumberMale = {currentNumberMale}
+            currentNumberFemale = {currentNumberFemale}
+            isOpen={isFarmDetailsOpen}
+            onClose={toggleFarmDetails}
+          >
+          </CycleDetails>
         </StyledHomeLayout>
       </>
     </div>
   );
-}
 
 interface ObjectsHome {
   objectID: number;
@@ -120,18 +144,18 @@ interface ObjectsHome {
   isDuringCycle: boolean;
 }
 
-const tableContainerSx: SxProps = {
-  width: "max-content",
-  maxHeight: 500,
-  border: "1px solid rgba(128,128,128,0.4)",
-  marginLeft: "auto",
-  marginRight: "auto",
-  mariginTop: 4,
-  borderRadius: 4,
-};
+function TableHome(homeScreen: any, isLoading: boolean) {
 
-export function TableHome(homeScreen: any, isLoading: boolean) {
-
+  const tableContainerSx: SxProps = {
+    width: "max-content",
+    maxHeight: 500,
+    border: "1px solid rgba(128,128,128,0.4)",
+    marginLeft: "auto",
+    marginRight: "auto",
+    mariginTop: 4,
+    borderRadius: 4,
+  };
+  
   const objects: Array<ObjectsHome> = homeScreen;
 
   return isLoading ? (
@@ -167,7 +191,10 @@ export function TableHome(homeScreen: any, isLoading: boolean) {
           <TableBody>
             {
               objects.map((object) => (
-                <TableRow key={object.objectID} style={object.isDuringCycle ? { background: '	white' } : { background: 'rgb(208,208,208)' }}>
+                <TableRow
+                  key={object.objectID}
+                  style={object.isDuringCycle ? { background: '	white' } : { background: 'rgb(208,208,208)' }}
+                  onClick={() => { handleRowClick(object.isDuringCycle, object.objectID.toString(), object.aliveMale, object.aliveFemale) }}>
                   <TableCell align="center">{object.objectName}</TableCell>
                   <TableCell align="center">{object.isDuringCycle ? object.aliveMale : '-'}</TableCell>
                   <TableCell align="center">{object.isDuringCycle ? object.aliveFemale : '-'}</TableCell>
@@ -179,8 +206,10 @@ export function TableHome(homeScreen: any, isLoading: boolean) {
               ))}
           </TableBody>
         </Table>
-      </TableContainer> : <H1>Brak ferm do wyświetlenia</H1>
+      </TableContainer>
+      : <H1>Brak ferm do wyświetlenia</H1>
   ) : <H1>Trwa ładowanie danych o bieżących cyklach ....</H1>;
+}
 }
 
 export { Home };

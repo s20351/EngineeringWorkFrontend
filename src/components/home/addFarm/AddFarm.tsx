@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import iconX from "../../assets/x.jpg";
-import { postNewFarm } from "../../services";
+import iconX from "../../../assets/x.jpg";
+import { postNewFarm } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddFarm";
 import "./styledAddFarm.css";
-import { useForm } from "./UseForm";
+import { useForm } from "../UseForm";
 import Swal from 'sweetalert2';
 
 interface ModalProps {

@@ -8,9 +8,9 @@ const StyledFieldSet = styled.fieldset`
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 22rem;
+  width: 17rem; 
+  margin-left: 0.2rem;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
 `;
 
 const StyledButton = styled(Button)`
@@ -20,7 +20,5 @@ const StyledButton = styled(Button)`
   width: 5rem;
   height: 2rem;
   margin-top: 0.6rem;
-  align-items: center;
 `;
-
 export { StyledFieldSet, StyledDiv, StyledButton };
