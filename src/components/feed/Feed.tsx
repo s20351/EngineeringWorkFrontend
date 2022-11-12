@@ -8,11 +8,10 @@ import {
   SxProps,
   Paper
 } from "@mui/material";
-import {  getDeliveries, getDeliveryEvents } from "../../services";
 import React, { useEffect, useMemo } from "react";
-import {  } from "../../services";
-import { DeliveryIndos } from "./AddDelivery";
-import { StyledButton, StyledDiv, H1 } from "./styledIndos";
+import {  getFeedDetailsByFarmerId, getFeedEventsByFarmerId } from "../../services";
+import { OrderFeed } from "./AddOrderFeed";
+import { StyledButton, StyledDiv, H1 } from "./styledFeed";
 import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import format from "date-fns/format";
@@ -20,22 +19,22 @@ import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 format(new Date(2014, 1, 1), 'yyyy-MM-dd')
-import "./Indos.css";
+import "./Feed.css";
 import enUS from 'date-fns/locale/en-US'
 
-function Indos(){
-  const [isIndosOrderOpen, setOrderIndosState] = React.useState(false);
-  const toggleIndosOrderState = () =>  setOrderIndosState(!isIndosOrderOpen);
+function Feed(){
+  const [isFeedOrderOpen, setOrderFeedState] = React.useState(false);
+  const toggleFeedOrderState = () =>  setOrderFeedState(!isFeedOrderOpen);
   const [allEvents, setAllEvents] = React.useState([]);
-  const [deliveries, setDeliveries] = React.useState([]);
+  const [feed, setFeed] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false)
 
   useEffect(() => {
     const fetchData = async () =>{
-      const dataCalendar = await getDeliveryEvents();
+      const dataCalendar = await getFeedEventsByFarmerId();
       setAllEvents(dataCalendar)
-      const deliveriesData = await getDeliveries();
-      setDeliveries(deliveriesData);
+      const data = await getFeedDetailsByFarmerId();
+      setFeed(data);
       setIsLoading(true);
     }
     fetchData()
@@ -45,34 +44,34 @@ function Indos(){
 
     return (
       <StyledDiv>
-      {TableIndos(deliveries, isLoading)}
-      <StyledButton variant="contained" onClick={() => toggleIndosOrderState()}>
-            Dodaj zamówienie od obcego hodowcy
+      {TableFeed(feed, isLoading)}
+      <StyledButton variant="contained" onClick={() => toggleFeedOrderState()}>
+            Dodaj zamówienie paszy
       </StyledButton>
       <StyledDiv>
         {getCalendar(allEvents)}
       </StyledDiv>
       <StyledDiv>
-      <DeliveryIndos
-          title = {"Dodaj zamówienie od obcego hodowcy"}
-          isOpen={isIndosOrderOpen}
-          onClose={toggleIndosOrderState}
+      <OrderFeed
+          title = {"Dodaj zamówienie paszy"}
+          isOpen={isFeedOrderOpen}
+          onClose={toggleFeedOrderState}
           >
-      </DeliveryIndos>
+      </OrderFeed>
       </StyledDiv>
       </StyledDiv>
     );
   };
 
-  export function TableIndos(deliveries: any, isLoading: boolean) {
-    interface Delivery {
-      date: Date;
-      name: string;
-      surname: string,
+  export function TableFeed(feed: any, isLoading: boolean) {
+    interface ObjectsFeed {
+      objectID: number;
+      farmName: string;
+      arrivalDate: Date,
       weight: number
     }
       
-    const objects: Array<Delivery> = deliveries;
+    const objects: Array<ObjectsFeed> = feed;
   
     const tableContainerSx: SxProps = {
       width: "max-content",
@@ -84,8 +83,8 @@ function Indos(){
       borderRadius: 4,
     };
 
-    return isLoading? (
-      objects.length > 0 ? 
+    return isLoading ? (
+      objects.length > 0 ?
       <TableContainer component={Paper} sx={tableContainerSx}>
         <Table stickyHeader={false}>
           <TableHead
@@ -105,9 +104,8 @@ function Indos(){
                 },
               }}
             >
-              <TableCell>Data dostawy</TableCell>
-              <TableCell>Imię hodowcy</TableCell>
-              <TableCell>Nazwisko hodowcy</TableCell>
+              <TableCell>Nazwa Obiektu</TableCell>
+              <TableCell>Data przyjazdu</TableCell>
               <TableCell>Waga</TableCell>
             </TableRow>
           </TableHead>
@@ -120,17 +118,16 @@ function Indos(){
           >
           {
           objects.map((object)=> (
-              <TableRow key={`${object.name} + ${object.surname} + ${object.date} `} >
-                <TableCell align="center">{object.date.toString()}</TableCell>
-                <TableCell align="center">{object.name}</TableCell>
-                <TableCell align="center">{object.surname}</TableCell>
+              <TableRow key={object.objectID} >
+                <TableCell align="center">{object.farmName}</TableCell>
+                <TableCell align="center">{object.arrivalDate.toString()}</TableCell>
                 <TableCell align="center">{object.weight}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer> : <H1>Brak dostaw do wyświetlenia</H1>
-    ): <H1>Trwa ładowanie danych o dostawach...</H1>;
+      </TableContainer> : <H1>Brak zamówień paszy do wyświetlenia</H1>
+    ) : <H1>Trwa ładowanie danych o zamówieniach paszy...</H1>;
   }
 
  function getCalendar(allEvents: any){
@@ -174,9 +171,9 @@ function Indos(){
         
     return(
     <div className="App">
-    <Calendar culture = {'pl'} localizer={localizer}  messages={messages} events={mappedEvents} startAccessor="start" endAccessor="end" views={['month']} style={{ height: 600, width:1200, margin: "50px"}} />
+    <Calendar culture = {'pl'} localizer={localizer}  messages={messages} events={mappedEvents} startAccessor="start" endAccessor="end" views={['month']} style={{ height: 600, width:1100, margin: "50px"}} />
     </div>  
     )
   }
   
-  export { Indos };
+  export { Feed };

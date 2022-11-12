@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
-import iconX from "../../assets/x.jpg";
-import { postNewFarm } from "../../services";
+import iconX from "../../../assets/x.jpg";
+import { postNewFarm } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddFarm";
 import "./styledAddFarm.css";
-import { useForm } from "./UseForm";
+import { useForm } from "../UseForm";
+import Swal from 'sweetalert2';
 
 interface ModalProps {
   title: string;
@@ -15,8 +16,6 @@ interface ModalProps {
 export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const outsideRef = React.useRef(null);
   const [name, setName] = useState<string>("");
-  const [adress, setAdress] = useState<string>("");
-
   const handleCloseOnOverlay = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -26,10 +25,28 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   };
   const initialState = {
     name: "",
-    adres: "",
   };
 
-  const { onChange, onSubmit, values } = useForm(initialState);
+  function alertDialogBox() {
+    if (name == "") {
+      Swal.fire({
+        title: 'Zła wartość w polu nazwa',
+        text: 'Musisz uzupełnić nazwę fermy ',
+        icon: 'warning',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+    } else {
+      Swal.fire({
+        title: 'Ferma została dodana',
+        icon: 'success',
+        confirmButtonColor: 'rgb(43, 103, 119)',
+      });
+      postNewFarm(name);
+      onClose();
+    }
+  }
+
+  const { onSubmit } = useForm(initialState);
 
   return isOpen ? (
     <div className={"modal"}>
@@ -55,20 +72,9 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
                   type="text"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  required
                 />
               </StyledDiv>
-              <StyledDiv>
-                <label htmlFor="adres">Adres:</label>
-                <input
-                  name="adres"
-                  id="adres"
-                  type="text"
-                  onChange={onChange}
-                  required
-                />
-              </StyledDiv>
-              <StyledButton type="submit">Dodaj</StyledButton>
+              <StyledButton type="submit" onClick={() => { alertDialogBox() }} >Dodaj</StyledButton>
             </StyledFieldSet>
           </form>
         </div>

@@ -7,6 +7,10 @@ const StyledHomeLayout = styled.div`
   align-items: center;
 `;
 
+const StyledLoadingInfo = styled.div`
+  align-items: center;
+`
+
 const StyledButton = styled(Button)`
   color: rgb(249, 228, 91);
   background-color: 	rgb(	43, 103, 119);
@@ -15,7 +19,7 @@ const StyledButton = styled(Button)`
   height: 4rem;
   margin-top: 1rem;
   margin-left: 1rem;
-  left: 37%
+
 `;
 
 const StyledLi = styled.li`
@@ -31,11 +35,11 @@ const StyledHome = styled.ul`
   margin: 0.0em 0.0em 0.0em 0.0em;
   padding: 0em 1em 0em 0em;
 `;
-const H1 = styled.h1(
-    {
-      fontSize: 17
-    },
-    props => ({ color: props.color })
-  )
+const H1 = styled.h1`
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-export {StyledHomeLayout, StyledButton, StyledLi, StyledHome, H1}
+export {StyledHomeLayout, StyledButton, StyledLi, StyledHome, H1, StyledLoadingInfo}

@@ -2,7 +2,7 @@ export * from "./button";
 export * from "./clickCounter";
 export * from "./navBar";
 export * from "./home";
-export * from "./hodowla";
+export * from "./Breeding";
 export * from "./indos";
-export * from "./pasza";
-export * from "./hodowcy"
+export * from "./feed";
+export * from "./farmers"
