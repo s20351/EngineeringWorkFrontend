@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import iconX from "../../assets/x.jpg";
-import { getFarmsByFarmerId, postNewDelivery } from "../../services";
+import iconX from "../../../assets/x.jpg";
+import { getFarmsByFarmerId, postNewDelivery } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddDelivery";
-import { useForm } from "./UseForm";
+import { useForm } from "../UseForm";
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 interface ModalProps {

@@ -7,31 +7,46 @@ const StyledButton = styled(Button)`
   border: 1px solid black;
   width: 15rem;
   height: 4rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-
 `;
 
 const StyledLi = styled.li`
 
 `;
+const StyledDivButtons = styled("div")`
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: white;
+  border: 1px solid black;
+`;
+
+const StyledFieldSet = styled.fieldset`
+  border: 0;
+  flex-direction: column;
+  display: flex;
+`;
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 35rem;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 0.5rem;
-  flex-direction: column;
   margin-top: 2rem;
   z-index: 1000;
 `;
 
 const H1 = styled.h1`
-  font-size: 1.2rem;
+  font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `
+const StyledDivLabel = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  margin-left: 1rem;
+`;
 
-export { StyledButton, StyledLi, StyledDiv, H1}
+
+export { StyledDivLabel, StyledDivButtons, StyledFieldSet, StyledButton, StyledLi, StyledDiv, H1}
