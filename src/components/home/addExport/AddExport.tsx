@@ -60,7 +60,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
     }
     fetchData()
       .catch(console.error)
-  }, []);
+  }, [isOpen]);
 
   const handleChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
     setCycle(event.target.value)

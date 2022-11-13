@@ -87,7 +87,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
     }
     fetchData()
     .catch(console.error)
-    }, []);
+    }, [isOpen]);
 
   const { onChange, onSubmit } = useForm('');
   

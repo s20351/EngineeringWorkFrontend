@@ -23,9 +23,6 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
       onClose();
     }
   };
-  const initialState = {
-    name: "",
-  };
 
   function alertDialogBox() {
     if (name == "") {
@@ -36,17 +33,28 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
         confirmButtonColor: 'rgb(43, 103, 119)',
       });
     } else {
-      Swal.fire({
-        title: 'Ferma została dodana',
-        icon: 'success',
-        confirmButtonColor: 'rgb(43, 103, 119)',
+      var response =  postNewFarm(name)
+      response.then(function(result){
+      if(result === 200){
+        Swal.fire({
+          title: 'Ferma została dodana',
+          icon: 'success',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        });
+      }else{
+        Swal.fire({
+          title: 'Ferma nie została dodana',
+          icon: 'error',
+          confirmButtonColor: 'rgb(43, 103, 119)',
+        });
+      }
       });
-      postNewFarm(name);
+      setName('')
       onClose();
     }
   }
 
-  const { onSubmit } = useForm(initialState);
+  const { onSubmit } = useForm('');
 
   return isOpen ? (
     <div className={"modal"}>

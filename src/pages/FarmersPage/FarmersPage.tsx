@@ -1,16 +1,16 @@
 import { ReactElement } from "react";
-import {  Home,NavBar } from "../../components";
+import {  Farmers ,NavBar } from "../../components";
 import { StyledAppLayout } from "../../styledApp";
 
-const HomePage = (): ReactElement => {
+const FarmersPage = (): ReactElement => {
   return (
     <>
       <NavBar />
       <StyledAppLayout>
-        {<Home />}
+        {<Farmers />}
       </StyledAppLayout>
     </>
   );
 };
 
-export { HomePage };
+export { FarmersPage };

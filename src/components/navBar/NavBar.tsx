@@ -1,35 +1,32 @@
 import { StyledNavBar, StyledLi, StyledButton, H1 } from "./styledNavBar";
+import { useNavigate } from "react-router";
 
-interface NavBarProps {
-  handleChangePage: (pageNumber: number) => void;
-}
-
-const NavBar = ({ handleChangePage }: NavBarProps) => {
+const NavBar = () => {
+  const navigate = useNavigate();
   return (
-    
     <StyledNavBar>
       <StyledLi>
-        <StyledButton variant="contained" onClick={() => handleChangePage(1)}>
+        <StyledButton variant="contained" onClick={() => {navigate('/home')} }>
           <H1>Home</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
-        <StyledButton variant="contained" onClick={() => handleChangePage(2)}>
+        <StyledButton variant="contained" onClick={() => {navigate('/hodowla')}}>
           <H1>Hodowla</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
-        <StyledButton variant="contained" onClick={() => handleChangePage(3)}>
+        <StyledButton variant="contained" onClick={() => navigate('/pasza')}>
           <H1>Pasza</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
-        <StyledButton variant="contained" onClick={() => handleChangePage(4)}>
+        <StyledButton variant="contained" onClick={() => navigate('/hodowcy')}>
           <H1>Hodowcy</H1>
         </StyledButton>
       </StyledLi>
       <StyledLi>
-        <StyledButton variant="contained" onClick={() => handleChangePage(5)}>
+        <StyledButton variant="contained" onClick={() => navigate('/indos')}>
           <H1>INDOS</H1>
         </StyledButton>
       </StyledLi>

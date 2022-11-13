@@ -29,9 +29,6 @@ const StyledFieldSet = styled.fieldset`
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  margin-top: 2rem;
-  z-index: 1000;
 `;
 
 const H1 = styled.h1`
@@ -40,13 +37,6 @@ const H1 = styled.h1`
   justify-content: center;
   align-items: center;
 `
-const StyledDivLabel = styled.div`
-  display: flex;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  background-color: white;
-  margin-left: 1rem;
-`;
 
 
-export { StyledDivLabel, StyledDivButtons, StyledFieldSet, StyledButton, StyledLi, StyledDiv, H1}
+export {StyledDivButtons, StyledFieldSet, StyledButton, StyledLi, StyledDiv, H1}

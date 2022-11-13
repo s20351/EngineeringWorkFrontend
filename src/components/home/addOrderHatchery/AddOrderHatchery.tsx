@@ -6,7 +6,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { getFarmsByFarmerId, postNewOrderHachery } from '../../../services';
 import { MenuItem } from '@mui/material';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { borderRadius, height, width } from '@mui/system';
 
 interface ModalProps {
   title: string;
@@ -49,7 +48,7 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
     }
     fetchData()
       .catch(console.error)
-  }, []);
+  }, [isOpen]);
 
   const [arrivalDate, setArrivalDate] = useState<string>("");
   const [numberMale, setNumberMale] = useState<string>("");
@@ -138,7 +137,7 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
                   type="date"
                   value={arrivalDate}
                   onChange={(event) => setArrivalDate(event.target.value)}
-                />       
+                />
               </StyledDiv>
               <StyledDiv>
                 <label htmlFor="numberMale">Ilość Indor:</label>

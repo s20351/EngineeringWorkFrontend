@@ -8,7 +8,7 @@ import { useEffect, useMemo } from "react";
 format(new Date(2014, 1, 1), "yyyy-MM-dd");
 import "./Breeding.css";
 import enUS from "date-fns/locale/en-US";
-import { StyledDiv, StyledFieldSet, InputLabel } from "./styledBreeding";
+import { StyledDivLabel, StyledDivSelect, StyledDiv, StyledFieldSet, InputLabel } from "./styledBreeding";
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import {
@@ -47,23 +47,29 @@ function Breeding() {
   return (
     <StyledFieldSet>
       <StyledDiv>
-        <InputLabel htmlFor="farm">Wybierz fermę: </InputLabel>
-      </StyledDiv>
-      <StyledDiv>
-        <Select
-          labelId="custom-select-label"
-          id="custom-select"
-          value={farm}
-          onChange={handleFarmChange}
-        >
-          {mappedFarms.map((mappedFarm) => {
-            return (
-              <MenuItem key={mappedFarm.farmId} value={mappedFarm.farmId}>
-                {mappedFarm.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
+        <StyledDivLabel>
+          <InputLabel htmlFor="farm">Wybierz Fermę: </InputLabel>
+        </StyledDivLabel>
+        <StyledDivSelect>
+          <Select
+            labelId="custom-select-label"
+            id="custom-select"
+            value={farm}
+            sx={{
+              position: 'sticky',
+              width: '100%',
+            }}
+            onChange={handleFarmChange}
+          >
+            {mappedFarms.map((mappedFarm) => {
+              return (
+                <MenuItem key={mappedFarm.farmId} value={mappedFarm.farmId}>
+                  {mappedFarm.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </StyledDivSelect>
       </StyledDiv>
 
       <StyledDiv>{getCalendar()}</StyledDiv>

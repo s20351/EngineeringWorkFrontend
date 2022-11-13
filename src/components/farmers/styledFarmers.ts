@@ -7,15 +7,34 @@ const StyledFieldSet = styled.fieldset`
 
 const StyledDiv = styled.div`
   display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: white;
+  border: 1px solid black;
+`;
+const StyledDivLabel = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  background-color: white;
+  margin-left: 1rem;
+`;
+
+const StyledDivSelect = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  margin-left: 2rem;
+  width: 10rem;
 `;
 
 const InputLabel = styled.label`
   color: black;
-  left: 55px;
   margin-top: 0.8rem;
-  text-align: right;
   font-size: 2rem;
+  font-family: 'Roboto Medium', sans-serif;
+  font-weight: bold;
 `;
 
-export { StyledFieldSet, StyledDiv, InputLabel };
+export {StyledDivLabel, StyledDivSelect, StyledFieldSet, StyledDiv, InputLabel };

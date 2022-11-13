@@ -40,7 +40,7 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
       }
       fetchData()
       .catch(console.error)
-      }, []);
+      }, [isOpen]);
   
   const { onChange, onSubmit } = useForm("");
   const [farm, setFarm] = React.useState("");

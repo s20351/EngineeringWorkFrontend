@@ -14,15 +14,15 @@ export const getHomeDetailsById = async () => {
 
 export const postNewFarm = async (name: string) => {
   try {
-    await fetch("http://localhost:5228/api/Farms/AddFarm/", {
+    const response = await fetch("http://localhost:5228/api/Farms/AddFarm/1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
         farmColor: "not implemented",
-      }),
+      })
     });
-    // TODO: add to list
+    return response.status;
   } catch (err) {
     console.error(err);
   }
@@ -216,4 +216,5 @@ export const getUserId = async (
   
     setData(id z BE)
     */
+   
 };
