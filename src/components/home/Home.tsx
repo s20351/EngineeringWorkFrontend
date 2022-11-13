@@ -5,11 +5,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Stack,
   SxProps,
   Paper,
-  Link,
-  Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { StyledDiv, StyledDivButtons, InputLabel, StyledDivLabel, StyledHomeLayout, StyledButton, H1, StyledLoadingInfo } from "./styledHome";
@@ -105,10 +102,7 @@ const Home: React.FC = () => {
               </StyledButton>
             </StyledDivLabel>
             <StyledDivLabel>
-              <StyledButton
-                variant="contained"
-                onClick={() => toggleAddOrderHatchery()}
-              >
+              <StyledButton variant="contained" onClick={() => toggleAddOrderHatchery()} >
                 Dodaj Pisklaki
               </StyledButton>
             </StyledDivLabel>
@@ -125,56 +119,56 @@ const Home: React.FC = () => {
           </StyledDivButtons>
 
           <StyledDivButtons>
-          <StyledHomeLayout>
-          <StyledDivLabel>
-            <InputLabel htmlFor="farm">Przegląd bieżących cykli produkcyjnych </InputLabel>
-          </StyledDivLabel>
-          <StyledLoadingInfo>
-            {TableHome(homeScreen, isLoading)}
-          </StyledLoadingInfo>
-          </StyledHomeLayout>
+            <StyledHomeLayout>
+              <StyledDivLabel>
+                <InputLabel htmlFor="farm">Przegląd bieżących cykli produkcyjnych </InputLabel>
+              </StyledDivLabel>
+              <StyledLoadingInfo>
+                {TableHome(homeScreen, isLoading)}
+              </StyledLoadingInfo>
+            </StyledHomeLayout>
           </StyledDivButtons>
 
           <StyledDiv>
-          <AddExport
-            title={"Dodaj zdawanie"}
-            isOpen={isExportOpen}
-            onClose={toggleExport}
-          >
-          </AddExport>
-          <DeleteFarm
-            title={"Usuń Fermę"}
-            isOpen={isDeleteFarmOpen}
-            onClose={toggleDeleteFarm}
-          >
-          </DeleteFarm>
-          <AddFarm
-            title={"Dodaj Fermę"}
-            isOpen={isAddFarmOpen}
-            onClose={toggleAddFarm}
-          >
-          </AddFarm>
-          <AddOrderHatchery
-            title={"Dodaj zamówienie z wylęgarni"}
-            isOpen={isAddOrderHatcheryOpen}
-            onClose={toggleAddOrderHatchery}
-          >
-          </AddOrderHatchery>
-          <AddCycle
-            title={"Dodaj wstawienie"}
-            isOpen={isAddCycleOpen}
-            onClose={toggleAddCycle}
-          >
-          </AddCycle>
-          <CycleDetails
-            title={"Szczegóły hodowli"}
-            farmDetailsID={farmDetailsID}
-            currentNumberMale={currentNumberMale}
-            currentNumberFemale={currentNumberFemale}
-            isOpen={isFarmDetailsOpen}
-            onClose={toggleFarmDetails}
-          >
-          </CycleDetails>
+            <AddExport
+              title={"Dodaj zdawanie"}
+              isOpen={isExportOpen}
+              onClose={toggleExport}
+            >
+            </AddExport>
+            <DeleteFarm
+              title={"Usuń Fermę"}
+              isOpen={isDeleteFarmOpen}
+              onClose={toggleDeleteFarm}
+            >
+            </DeleteFarm>
+            <AddFarm
+              title={"Dodaj Fermę"}
+              isOpen={isAddFarmOpen}
+              onClose={toggleAddFarm}
+            >
+            </AddFarm>
+            <AddOrderHatchery
+              title={"Dodaj zamówienie z wylęgarni"}
+              isOpen={isAddOrderHatcheryOpen}
+              onClose={toggleAddOrderHatchery}
+            >
+            </AddOrderHatchery>
+            <AddCycle
+              title={"Dodaj wstawienie"}
+              isOpen={isAddCycleOpen}
+              onClose={toggleAddCycle}
+            >
+            </AddCycle>
+            <CycleDetails
+              title={"Szczegóły hodowli"}
+              farmDetailsID={farmDetailsID}
+              currentNumberMale={currentNumberMale}
+              currentNumberFemale={currentNumberFemale}
+              isOpen={isFarmDetailsOpen}
+              onClose={toggleFarmDetails}
+            >
+            </CycleDetails>
           </StyledDiv>
         </StyledHomeLayout>
       </>
