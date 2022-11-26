@@ -1,4 +1,4 @@
-const baseUri: string = "http://localhost:5228/api/";
+const baseUri: string = "https://indoswstawienia.azurewebsites.net/api/";
 
 export const Register = async (
   Email: string,
