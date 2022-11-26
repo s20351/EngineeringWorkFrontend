@@ -1,1 +1,1 @@
-export * from "./breedingComponent";
+export * from "./Breeding";

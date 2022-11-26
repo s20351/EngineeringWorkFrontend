@@ -1,5 +1,5 @@
 import { ReactElement, useContext } from "react";
-import {  BreedingComponent, NavBar } from "../../components";
+import {  Breeding, NavBar } from "../../components";
 import { NotFound } from "../../components/errors/404";
 import { FarmerContext } from "../../providers/FarmerDataProvider";
 import { StyledAppLayout } from "../../styledApp";
@@ -11,7 +11,7 @@ const BreedingPage = (): ReactElement => {
     <>
       <NavBar/>
       <StyledAppLayout>
-        {<BreedingComponent />}
+        {<Breeding />}
       </StyledAppLayout>
     </>
         : 
