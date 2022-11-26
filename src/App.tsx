@@ -7,6 +7,8 @@ import { BreedingPage } from "./pages/BreedingPage/BreedingPage";
 import { FeedPage} from "./pages/FeedPage/FeedPage";
 import { IndosPage } from "./pages/IndosPage/IndosPage";
 import { FarmersPage } from "./pages/FarmersPage/FarmersPage";
+import { ErrorPage } from "./pages/ErrorPage/ErrorPage";
+import { RegisterPage } from "./pages/RegisterPage/RegisterPage";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path="pasza" element={<FeedPage />} />
       <Route path="hodowcy" element={<FarmersPage />} />
       <Route path="indos" element={<IndosPage />} />
+      <Route path="rejestracja" element={<RegisterPage />} />
+      <Route path="*" element ={<ErrorPage/>} />
     </Routes>
   );
 }

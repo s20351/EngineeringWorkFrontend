@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import iconX from "../../../assets/x.jpg";
 import { deleteFarmByFarmId, getFarmsByFarmerId } from "../../../services";
 import { StyledButton, StyledFieldSet } from "./styledDeleteFarm";
@@ -6,6 +6,7 @@ import { useForm } from "../UseForm";
 import Select, {SelectChangeEvent} from '@mui/material/Select'
 import { MenuItem } from "@mui/material";
 import Swal, {SweetAlertOptions} from 'sweetalert2';
+import { FarmerContext } from "../../../providers/FarmerDataProvider";
 
 interface ModalProps {
   title: string;
@@ -24,7 +25,7 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
       onClose();
     }
   };
-
+  const { data } = useContext(FarmerContext);
   interface Farm{
     farmId: string,
     name: string
@@ -32,7 +33,7 @@ export const DeleteFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => 
 
     useEffect(() => {
       const fetchData = async () =>{
-        await getFarmsByFarmerId()
+        await getFarmsByFarmerId(data.id)
         .then((resp) => {
           setDataFarms(resp)
           setIsLoading(true)

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { getFeedDetailsByFarmerId, getFeedEventsByFarmerId } from "../../services";
+import React, { useContext, useEffect, useMemo } from "react";
+import { getFeedEventsByFarmerId } from "../../services";
 import { OrderFeed } from "./AddOrderFeed/AddOrderFeed";
 import { StyledDivLabel, StyledDivButtons, StyledFieldSet, StyledButton, StyledDiv, H1 } from "./styledFeed";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -12,6 +12,7 @@ format(new Date(2014, 1, 1), 'yyyy-MM-dd')
 import "./Feed.css";
 import enUS from 'date-fns/locale/en-US'
 import { DisplayOrders } from "./DisplayOrders/DisplayOrders";
+import { FarmerContext } from "../../providers/FarmerDataProvider";
 
 function Feed() {
   const [isFeedOrderOpen, setOrderFeedState] = React.useState(false);
@@ -21,7 +22,7 @@ function Feed() {
     }
     setOrderFeedState(!isFeedOrderOpen);
   }
-
+  const { data } = useContext(FarmerContext);
   const [isDisplayOrdersOpen, setDisplayOrdersState] = React.useState(false);
   const toggleDisplayOrderState = () => {
     if (isDisplayOrdersOpen) {
@@ -35,7 +36,7 @@ function Feed() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const dataCalendar = await getFeedEventsByFarmerId();
+      const dataCalendar = await getFeedEventsByFarmerId(data.id);
       setAllEvents(dataCalendar)
       setIsCurrentData(true);
     }

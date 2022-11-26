@@ -8,17 +8,16 @@ const StyledDiv = styled("div")`
   width: fit-content;
   margin: auto;
 `;
-
-const StyledSpan = styled("span")`
-  width: 7rem;
-  height: 2rem;
-`;
 const StyledH1 = styled("h1")`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: fit-content;
   margin: auto;
+`;
+const StyledSpan = styled("span")`
+  width: 7rem;
+  height: 2rem;
 `;
 
 const StyledButton = styled(Button)`
@@ -30,4 +29,4 @@ const StyledButton = styled(Button)`
   margin-top: 0.6rem;
 `;
 
-export { StyledH1, StyledDiv, StyledSpan, StyledButton };
+export { StyledDiv, StyledSpan, StyledButton, StyledH1 };

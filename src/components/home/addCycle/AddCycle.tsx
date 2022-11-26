@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import iconX from '../../../assets/x.jpg';
 import { StyledDiv, StyledFieldSet, StyledButton } from './styledAddCycle';
 import { useForm } from '../UseForm';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { getFarmsByFarmerId, getHatcheryOrderdsByFarmId, postNewCycle } from '../../../services';
 import Swal, {SweetAlertOptions} from 'sweetalert2';
+import { FarmerContext } from '../../../providers/FarmerDataProvider';
 
 interface ModalProps {
   title: string;
@@ -36,7 +37,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
   const [orderHatcheryDate, setOrderHatcheryDate] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false)
   const mappedDeliveries: Array<Delivery> = orderHatcheryDateSelect
-
+  const { data } = useContext(FarmerContext);
   function clearData(){
     setFarm("");
     setorderHatcheryId("");
@@ -79,7 +80,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
 
   useEffect(() => {
     const fetchData = async () =>{
-      await getFarmsByFarmerId()
+      await getFarmsByFarmerId(data.id)
       .then((resp) => {
         setDataFarms(resp)
         setIsLoading(true)

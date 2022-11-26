@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import iconX from '../../../assets/x.jpg';
 import { StyledDiv, StyledFieldSet, StyledButton } from './styledAddOrderHatchery';
 import { useForm } from "../UseForm";
@@ -6,6 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { getFarmsByFarmerId, postNewOrderHachery } from '../../../services';
 import { MenuItem } from '@mui/material';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
+import { FarmerContext } from '../../../providers/FarmerDataProvider';
 
 interface ModalProps {
   title: string;
@@ -15,6 +16,7 @@ interface ModalProps {
 }
 
 export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose, children }) => {
+  const { data } = useContext(FarmerContext);
   const outsideRef = React.useRef(null);
   const [farm, setFarm] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false)
@@ -36,11 +38,9 @@ export const AddOrderHatchery: React.FC<ModalProps> = ({ title, isOpen, onClose,
 
   const { onChange, onSubmit } = useForm('');
 
-
-
   useEffect(() => {
     const fetchData = async () => {
-      await getFarmsByFarmerId()
+      await getFarmsByFarmerId(data.id)
         .then((resp) => {
           setDataFarms(resp)
           setIsLoading(true)

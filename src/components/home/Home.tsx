@@ -8,7 +8,7 @@ import {
   SxProps,
   Paper,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyledDiv, StyledDivButtons, InputLabel, StyledDivLabel, StyledHomeLayout, StyledButton, H1, StyledLoadingInfo } from "./styledHome";
 import { AddFarm } from "./addFarm/AddFarm";
 import { AddOrderHatchery } from "./addOrderHatchery/AddOrderHatchery";
@@ -17,6 +17,7 @@ import { DeleteFarm } from "./deleteFarm/DeleteFarm"
 import { getHomeDetailsById } from "../../services";
 import { AddExport } from "./addExport/AddExport";
 import { CycleDetails } from "./cycleDetails/CycleDetails";
+import { FarmerContext } from "../../providers/FarmerDataProvider";
 
 const Home: React.FC = () => {
   const [isAddFarmOpen, setAddFarmState] = React.useState(false);
@@ -65,7 +66,7 @@ const Home: React.FC = () => {
   }
   const [currentNumberMale, setCurrentNumberMale] = React.useState(0);
   const [currentNumberFemale, setCurrentNumberFemale] = React.useState(0);
-
+  const { data } = useContext(FarmerContext);
   const handleRowClick = (isDuringCycle: boolean, objectID: string, currentNumberMale: number, currentNumberFemale: number) => {
     if (isDuringCycle) {
       setFarmDetailsID(objectID)
@@ -77,8 +78,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getHomeDetailsById();
-      setHomeScreen(data);
+      const response = await getHomeDetailsById(data.id);
+      setHomeScreen(response);
       setIsLoading(true);
       setIsCurrentData(true);
     }

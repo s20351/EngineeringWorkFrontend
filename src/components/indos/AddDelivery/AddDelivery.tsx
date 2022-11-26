@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import iconX from "../../../assets/x.jpg";
 import { getFarmsByFarmerId, postNewDelivery } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddDelivery";
 import { useForm } from "../UseForm";
 import Swal, { SweetAlertOptions } from 'sweetalert2';
+import { FarmerContext } from "../../../providers/FarmerDataProvider";
 
 interface ModalProps {
   title: string;
@@ -24,12 +25,11 @@ export const DeliveryIndos: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
   };
   const [arrivalDate, setArrivalDate] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
-
+  const { data } = useContext(FarmerContext);
   useEffect(() => {
     const fetchData = async () =>{
-      await getFarmsByFarmerId()
+      await getFarmsByFarmerId(data.id)
       .then((resp) => {
-        
         setIsLoading(true)
       })
     }

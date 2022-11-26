@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import iconX from "../../../assets/x.jpg";
 import { postNewFarm } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddFarm";
 import "./styledAddFarm.css";
 import { useForm } from "../UseForm";
 import Swal from 'sweetalert2';
+import { FarmerContext } from "../../../providers/FarmerDataProvider";
 
 interface ModalProps {
   title: string;
@@ -16,6 +17,7 @@ interface ModalProps {
 export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const outsideRef = React.useRef(null);
   const [name, setName] = useState<string>("");
+  const { data } = useContext(FarmerContext);
   const handleCloseOnOverlay = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
@@ -33,7 +35,7 @@ export const AddFarm: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
         confirmButtonColor: 'rgb(43, 103, 119)',
       });
     } else {
-      var response =  postNewFarm(name)
+      var response =  postNewFarm(data.id, name)
       response.then(function(result){
       if(result === 200){
         Swal.fire({

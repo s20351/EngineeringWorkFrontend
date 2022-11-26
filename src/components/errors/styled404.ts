@@ -7,27 +7,21 @@ const StyledDiv = styled("div")`
   justify-content: center;
   width: fit-content;
   margin: auto;
+  font-size: 3rem;
 `;
 
 const StyledSpan = styled("span")`
   width: 7rem;
   height: 2rem;
 `;
-const StyledH1 = styled("h1")`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: fit-content;
-  margin: auto;
-`;
 
 const StyledButton = styled(Button)`
   color: rgb(249, 228, 91);
   background-color: rgb(43, 103, 119);
   border: 1px solid black;
-  width: 8rem;
-  height: 2rem;
+  width: 10rem;
+  height: 5rem;
   margin-top: 0.6rem;
 `;
 
-export { StyledH1, StyledDiv, StyledSpan, StyledButton };
+export { StyledDiv, StyledSpan, StyledButton };

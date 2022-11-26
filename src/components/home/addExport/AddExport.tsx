@@ -1,10 +1,11 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import iconX from "../../../assets/x.jpg";
 import { getCycleByFarmerId, postNewExport } from "../../../services";
 import { StyledButton, StyledDiv, StyledFieldSet } from "./styledAddExport";
 import { useForm } from "../UseForm";
 import Swal, { SweetAlertOptions } from 'sweetalert2';
+import { FarmerContext } from "../../../providers/FarmerDataProvider";
 
 interface ModalProps {
   title: string;
@@ -41,7 +42,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const [cycleEndDate, setcycleEndDate] = React.useState("");
   const [cycleStartDate, setcycleStartDate] = React.useState("");
-
+  const { data } = useContext(FarmerContext);
   function clearData() {
     setCycle("");
     setExportDate("");
@@ -52,7 +53,7 @@ export const AddExport: React.FC<ModalProps> = ({ title, isOpen, onClose }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getCycleByFarmerId()
+      await getCycleByFarmerId(data.id)
         .then((resp) => {
           setDataCycles(resp)
           setIsLoading(true)

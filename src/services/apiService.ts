@@ -1,20 +1,62 @@
-import { ExecOptionsWithStringEncoding } from "child_process";
-import { useContext } from "react";
-import { FarmerContext } from "../providers/FarmerDataProvider";
+const baseUri: string = "http://localhost:5228/api/";
 
-//const { data, setData } = useContext(FarmerContext);
+export const Register = async (
+  Email: string,
+  Password: string,
+  Name: string,
+  Surname: string
+) => {
+  try {
+    const response = await fetch(`${baseUri}Auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Name,
+        Surname,
+        Email,
+        Password
+      })
+    });
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-export const getHomeDetailsById = async () => {
+export const Login = async (
+  Email: string,
+  Password: string
+) => {
+  try {
+    const response = await fetch(`${baseUri}Auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Email,
+        Password
+      })
+    });
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getHomeDetailsById = async (
+  id: number
+) => {
   const rawData = await fetch(
-    "http://localhost:5228/api/Farms/GetHomeDetails?farmerID=1"
+    `${baseUri}Farms/GetHomeDetails?farmerID=${id}`
   );
   const data = await rawData.json();
   return data;
 };
 
-export const postNewFarm = async (name: string) => {
+export const postNewFarm = async (
+  id: number,
+  name: string) => {
   try {
-    const response = await fetch("http://localhost:5228/api/Farms/AddFarm/1", {
+    const response = await fetch(`${baseUri}Farms/AddFarm/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -28,26 +70,28 @@ export const postNewFarm = async (name: string) => {
   }
 };
 
-export const getFarmsByFarmerId = async () => {
-  const rawData = await fetch("http://localhost:5228/api/Farms/1");
+export const getFarmsByFarmerId = async (
+  id: number
+) => {
+  const rawData = await fetch(`${baseUri}Farms/${id}`);
   const data = await rawData.json();
   return data;
 };
 
 export const getFarmers = async () => {
-  const rawData = await fetch("http://localhost:5228/api/Farmers");
+  const rawData = await fetch(`${baseUri}Farmers`);
   const data = await rawData.json();
   return data;
 };
 
 export const getDeliveries = async () => {
-  const rawData = await fetch("http://localhost:5228/api/Delivery");
+  const rawData = await fetch(`${baseUri}Delivery`);
   const data = await rawData.json();
   return data;
 };
 
 export const deleteFarmByFarmId = async (farmId: string) => {
-  await fetch(`http://localhost:5228/api/Farms/DeleteFarm/${farmId}`, {
+  await fetch(`${baseUri}Farms/DeleteFarm/${farmId}`, {
     method: "DELETE",
   });
 };
@@ -59,7 +103,7 @@ export const postNewOrderHachery = async (
   numberMale: string,
   numberFemale: string
 ) => {
-  await fetch(`http://localhost:5228/api/OrderHatchery/${farmId}`, {
+  await fetch(`${baseUri}OrderHatchery/${farmId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -73,7 +117,7 @@ export const postNewOrderHachery = async (
 
 export const getHatcheryOrderdsByFarmId = async (farmId: string) => {
   const rawData = await fetch(
-    `http://localhost:5228/api/OrderHatchery/GetDeliveriesDates/${farmId}`
+    `${baseUri}OrderHatchery/GetDeliveriesDates/${farmId}`
   );
   const data = await rawData.json();
   return data;
@@ -85,7 +129,7 @@ export const postNewCycle = async (
   dateOut: string,
   hatcheryOrderID: string
 ) => {
-  await fetch(`http://localhost:5228/api/Cycle/CreateCycle/${farmId}`, {
+  await fetch(`${baseUri}Cycle/CreateCycle/${farmId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -97,7 +141,7 @@ export const postNewCycle = async (
 };
 
 export const postNewDelivery = async (deliveryDate: string, weight: string) => {
-  await fetch(`http://localhost:5228/api/Delivery`, {
+  await fetch(`${baseUri}Delivery`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -112,7 +156,7 @@ export const postDeathsByFarmId = async (
   deathsMale: string,
   deathsFemale: string
 ) => {
-  await fetch(`http://localhost:5228/api/Farms/AddDeaths/${farmId}`, {
+  await fetch(`${baseUri}Farms/AddDeaths/${farmId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -122,8 +166,10 @@ export const postDeathsByFarmId = async (
   });
 };
 
-export const getCycleByFarmerId = async () => {
-  const rawData = await fetch(`http://localhost:5228/api/Cycle/1`);
+export const getCycleByFarmerId = async (
+  id: number
+) => {
+  const rawData = await fetch(`${baseUri}Cycle/${id}`);
   const data = await rawData.json();
   return data;
 };
@@ -135,7 +181,7 @@ export const postNewExport = async (
   numberFemale: string,
   weight: string
 ) => {
-  await fetch(`http://localhost:5228/api/Export/AddExport/${cycleId}`, {
+  await fetch(`${baseUri}Export/AddExport/${cycleId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -149,7 +195,7 @@ export const postNewExport = async (
 
 export const getFarmScheduleEventsByFarmId = async (farmId: string) => {
   const rawData = await fetch(
-    `http://localhost:5228/api/Farms/GetAllFarmEvents/${farmId}`
+    `${baseUri}Farms/GetAllFarmEvents/${farmId}`
   );
   const data = await rawData.json();
   return data;
@@ -157,15 +203,17 @@ export const getFarmScheduleEventsByFarmId = async (farmId: string) => {
 
 export const getFarmerScheduleEventsByFarmerId = async (farmerId: string) => {
   const rawData = await fetch(
-    `http://localhost:5228/api/Farmers/GetFarmerEvents/${farmerId}`
+    `${baseUri}Farmers/GetFarmerEvents/${farmerId}`
   );
   const data = await rawData.json();
   return data;
 };
 
-export const getFeedDetailsByFarmerId = async () => {
+export const getFeedDetailsByFarmerId = async (
+  farmerId: number
+) => {
   const rawData = await fetch(
-    `http://localhost:5228/api/OrderFeed/GetOrdersSchedule/1`
+    `${baseUri}OrderFeed/GetOrdersSchedule/${farmerId}`
   );
   const data = await rawData.json();
   return data;
@@ -178,7 +226,7 @@ export const postNewOrderFeed = async (
   weight: string
 ) => {
   try {
-    await fetch(`http://localhost:5228/api/OrderFeed/${farmId}`, {
+    await fetch(`${baseUri}OrderFeed/${farmId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -193,28 +241,16 @@ export const postNewOrderFeed = async (
   }
 };
 
-export const getFeedEventsByFarmerId = async () => {
+export const getFeedEventsByFarmerId = async (farmerId: number) => {
   const rawData = await fetch(
-    `http://localhost:5228/api/OrderFeed/GetEvents/1`
+    `${baseUri}OrderFeed/GetEvents/${farmerId}`
   );
   const data = await rawData.json();
   return data;
 };
 
 export const getDeliveryEvents = async () => {
-  const rawData = await fetch(`http://localhost:5228/api/Delivery/GetEvents`);
+  const rawData = await fetch(`${baseUri}Delivery/GetEvents`);
   const data = await rawData.json();
   return data;
-};
-
-export const getUserId = async (
-  login: string,
-  password: string
-): Promise<void> => {
-  /*
-    call do api, wiadomosc zwrotna
-  
-    setData(id z BE)
-    */
-   
 };

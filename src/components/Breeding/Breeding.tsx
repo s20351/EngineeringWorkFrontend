@@ -4,7 +4,7 @@ import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 format(new Date(2014, 1, 1), "yyyy-MM-dd");
 import "./Breeding.css";
 import enUS from "date-fns/locale/en-US";
@@ -15,12 +15,13 @@ import {
   getFarmsByFarmerId,
   getFarmScheduleEventsByFarmId,
 } from "../../services";
+import { FarmerContext } from "../../providers/FarmerDataProvider";
 
 function Breeding() {
   const [farm, setFarm] = React.useState("");
   const [dataFarms, setDataFarms] = React.useState([]);
   const [allEvents, setAllEvents] = React.useState([]);
-
+  const { data } = useContext(FarmerContext);
   const handleFarmChange = async (
     event: SelectChangeEvent<string>,
     child: React.ReactNode
@@ -37,7 +38,7 @@ function Breeding() {
   const mappedFarms: Array<Farm> = dataFarms;
   useEffect(() => {
     const fetchData = async () => {
-      await getFarmsByFarmerId().then((resp) => {
+      await getFarmsByFarmerId(data.id).then((resp) => {
         setDataFarms(resp);
       });
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import iconX from "../../../assets/x.jpg";
 import { StyledFieldSet, StyledDiv, H1 } from "./styledDisplayOrders";
 import { getFeedDetailsByFarmerId } from "../../../services";
@@ -14,6 +14,7 @@ import {
     SxProps,
     Paper
 } from "@mui/material";
+import { FarmerContext } from "../../../providers/FarmerDataProvider";
 
 interface ModalProps {
     title: string;
@@ -27,6 +28,7 @@ export const DisplayOrders: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
     const [isLoading, setIsLoading] = React.useState(false)
     const [feed, setFeed] = React.useState([]);
     const outsideRef = React.useRef(null);
+    const { data } = useContext(FarmerContext);
     const handleCloseOnOverlay = (
         e: React.MouseEvent<HTMLElement, MouseEvent>
     ) => {
@@ -37,8 +39,8 @@ export const DisplayOrders: React.FC<ModalProps> = ({ title, isOpen, onClose }) 
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getFeedDetailsByFarmerId();
-            setFeed(data);
+            const response = await getFeedDetailsByFarmerId(data.id);
+            setFeed(response);
             setIsLoading(true);
         }
         fetchData()

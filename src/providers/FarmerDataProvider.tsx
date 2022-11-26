@@ -5,12 +5,12 @@ export interface FarmerDataProviderInterface {
 }
 
 interface FarmerDataInterface {
-  id: number | string;
+  id: number;
 }
 
 interface FarmerDataContextInterface {
   data: FarmerDataInterface;
-  setData: (id: number | string) => void;
+  setData: (id: number) => void;
 }
 
 const startingState: FarmerDataContextInterface = {
@@ -25,7 +25,7 @@ const FarmerDataProvider = ({ children }: FarmerDataProviderInterface) => {
     startingState.data
   );
 
-  const handleSetData = (id: number | string) => {
+  const handleSetData = (id: number) => {
     setFarmerData({ id: id });
   };
 
