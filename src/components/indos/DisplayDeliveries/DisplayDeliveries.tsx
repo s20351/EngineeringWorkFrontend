@@ -44,7 +44,7 @@ export const DisplayDeliveries: React.FC<ModalProps> = ({ title, isOpen, onClose
             .catch(console.error)
     }, [isOpen]);
 
-    const { onChange, onSubmit } = useForm('');
+    const {onSubmit } = useForm('');
 
     return isOpen ? (
         <div className={"modal"}>

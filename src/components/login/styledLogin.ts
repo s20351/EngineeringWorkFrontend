@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled, { StyledComponent } from "@emotion/styled";
 import { Button } from "@mui/material";
 
 const StyledDiv = styled("div")`
