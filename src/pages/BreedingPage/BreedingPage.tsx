@@ -1,6 +1,7 @@
 import { ReactElement, useContext } from "react";
-import {  Breeding, NavBar } from "../../components";
+import {  Breeding } from "../../components/breeding/Breeding";
 import { NotFound } from "../../components/errors/404";
+import { NavBar } from "../../components/navBar/NavBar";
 import { FarmerContext } from "../../providers/FarmerDataProvider";
 import { StyledAppLayout } from "../../styledApp";
 
