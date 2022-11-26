@@ -17,7 +17,7 @@ import {
 } from "../../services";
 import { FarmerContext } from "../../providers/FarmerDataProvider";
 
-function Breeding() {
+function BreedingComponent() {
   const [farm, setFarm] = React.useState("");
   const [dataFarms, setDataFarms] = React.useState([]);
   const [allEvents, setAllEvents] = React.useState([]);
@@ -131,4 +131,4 @@ function Breeding() {
     );
   }
 }
-export { Breeding };
+export { BreedingComponent };
