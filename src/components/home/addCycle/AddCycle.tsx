@@ -47,7 +47,7 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
 
   function alertDialogBox(){
     const [day, month, year] = orderHatcheryDate.split('/')
-    const dateIn = new Date(+year, +month - 1, +day)
+    const dateIn = new Date(+year-1, +month - 1, +day)
     const dateOut = new Date(endDate);
     if(farm == "" || description == "" || orderHatcheryId == "" || endDate ==""){
       Swal.fire({
