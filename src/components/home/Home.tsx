@@ -29,31 +29,35 @@ const Home: React.FC = () => {
   const [isCurrentData, setIsCurrentData] = React.useState(false);
 
   const toggleAddFarm = () => {
-      setIsCurrentData(false)
+    setIsCurrentData(false)
     setAddFarmState(!isAddFarmOpen);
   }
   const toggleAddCycle = () => {
-      setIsCurrentData(false)
+    setIsCurrentData(false)
     setAddCycleState(!isAddCycleOpen);
   }
-  const toggleAddOrderHatchery = () =>
+  const toggleAddOrderHatchery = () =>{
+    setIsCurrentData(false)
     setOrderHatcheryState(!isAddOrderHatcheryOpen);
+  }
+
   const toggleDeleteFarm = () => {
-      setIsCurrentData(false)
+    setIsCurrentData(false)
     setDeleteFarmState(!isDeleteFarmOpen);
   }
+
   const toggleExport = () => {
-      setIsCurrentData(false)
+    setIsCurrentData(false)
     setExportState(!isExportOpen);
   }
-  const [homeScreen, setHomeScreen] = React.useState([]);
 
-  const [farmDetailsID, setFarmDetailsID] = React.useState('');
-  const [isFarmDetailsOpen, setFarmDetailsState] = React.useState(false);
   const toggleFarmDetails = () => {
-      setIsCurrentData(false)
+    setIsCurrentData(false)
     setFarmDetailsState(!isFarmDetailsOpen);
   }
+  const [homeScreen, setHomeScreen] = React.useState([]);
+  const [farmDetailsID, setFarmDetailsID] = React.useState('');
+  const [isFarmDetailsOpen, setFarmDetailsState] = React.useState(false);
   const [currentNumberMale, setCurrentNumberMale] = React.useState(0);
   const [currentNumberFemale, setCurrentNumberFemale] = React.useState(0);
   const { data } = useContext(FarmerContext);
