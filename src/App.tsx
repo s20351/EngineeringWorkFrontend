@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router";
-import { LoginPage } from "./pages/Login/LoginPage";
-import { HomePage } from "./pages/HomePage/HomePage";
+import { LoginPage } from "./pages/login/LoginPage";
 import { FarmerContext } from "./providers/FarmerDataProvider";
-import { BreedingPage } from "./pages/BreedingPage/BreedingPage";
-import { FeedPage} from "./pages/FeedPage/FeedPage";
-import { IndosPage } from "./pages/IndosPage/IndosPage";
-import { FarmersPage } from "./pages/FarmersPage/FarmersPage";
-import { ErrorPage } from "./pages/ErrorPage/ErrorPage";
-import { RegisterPage } from "./pages/RegisterPage/RegisterPage";
+import { BreedingPage } from "./pages/breedingPage/BreedingPage";
+import { FeedPage} from "./pages/feedPage/FeedPage";
+import { IndosPage } from "./pages/indosPage/IndosPage";
+import { FarmersPage } from "./pages/farmersPage/FarmersPage";
+import { ErrorPage } from "./pages/errorPage/ErrorPage";
+import { RegisterPage } from "./pages/registerPage/RegisterPage";
+import { HomePage } from "./pages/homePage/HomePage";
 
 function App() {
   return (
