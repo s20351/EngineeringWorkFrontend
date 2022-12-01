@@ -17,17 +17,13 @@ import { FarmerContext } from "../../providers/FarmerDataProvider";
 function Feed() {
   const [isFeedOrderOpen, setOrderFeedState] = React.useState(false);
   const toggleFeedOrderState = () => {
-    if (isFeedOrderOpen) {
       setIsCurrentData(false)
-    }
     setOrderFeedState(!isFeedOrderOpen);
   }
   const { data } = useContext(FarmerContext);
   const [isDisplayOrdersOpen, setDisplayOrdersState] = React.useState(false);
   const toggleDisplayOrderState = () => {
-    if (isDisplayOrdersOpen) {
       setIsCurrentData(false)
-    }
     setDisplayOrdersState(!isDisplayOrdersOpen);
   }
 

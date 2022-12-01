@@ -21,16 +21,12 @@ function Indos() {
 
   const [isDisplayOrdersOpen, setDisplayOrdersState] = React.useState(false);
   const toggleDisplayOrderState = () => {
-    if (isDisplayOrdersOpen) {
       setIsCurrentData(false)
-    }
     setDisplayOrdersState(!isDisplayOrdersOpen);
   }
 
   const toggleIndosOrderState = () => {
-    if (isIndosOrderOpen) {
       setIsCurrentData(false)
-    }
     setOrderIndosState(!isIndosOrderOpen);
   }
 

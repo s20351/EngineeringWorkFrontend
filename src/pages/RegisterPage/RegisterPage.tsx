@@ -6,6 +6,7 @@ import { Formik, Form } from "formik";
 import './RegisterPage.css'
 import { Login, Register } from "../../services/apiService";
 import Swal from 'sweetalert2';
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   const { setData } = useContext(FarmerContext);
   
@@ -25,8 +27,10 @@ const RegisterPage = () => {
       if(email != "" && name != "" && surname != "" && password != "")
       {
         var response =  Register(email,password,name,surname)
+        setIsLoading(true)
         response.then(function(result){
           if(result?.status == 200){
+            setIsLoading(false)
             result.json().then(userId => {
               setData(userId)
             })
@@ -39,6 +43,7 @@ const RegisterPage = () => {
           }
         }) 
       }else{
+        setIsLoading(false)
         Swal.fire({
           title: 'Musisz uzupełnić wszystkie pola',
           icon: 'error',
@@ -49,7 +54,7 @@ const RegisterPage = () => {
 
   const initialValues = {
     username: "",
-    password: "",
+    password: ""
   };
 
   return (
@@ -62,7 +67,7 @@ const RegisterPage = () => {
       >
         <Form>
         <StyledDiv className="form-group">
-            <label htmlFor="username" typeof="email">Imię</label>
+            <label htmlFor="name" typeof="text">Imię</label>
             <input
                   name="name"
                   id="name"
@@ -72,7 +77,7 @@ const RegisterPage = () => {
                 />
           </StyledDiv>
         <StyledDiv className="form-group">
-            <label htmlFor="username" typeof="email">Nazwisko</label>
+            <label htmlFor="surname" typeof="text">Nazwisko</label>
             <input
                   name="surname"
                   id="surname"
@@ -82,7 +87,7 @@ const RegisterPage = () => {
                 />
           </StyledDiv>
           <StyledDiv className="form-group">
-            <label htmlFor="username" typeof="email">Email</label>
+            <label htmlFor="email" typeof="email">Email</label>
             <input
                   name="email"
                   id="email"
@@ -95,7 +100,7 @@ const RegisterPage = () => {
             <label htmlFor="password">Hasło</label>
                 <input
                   name="password"
-                  id="nazwa"
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
@@ -109,6 +114,11 @@ const RegisterPage = () => {
       <StyledDiv className="form-group">
               <StyledButton type="submit"onClick={() => {login() }} >Logowanie</StyledButton>
       </StyledDiv>
+      {!isLoading? null : 
+      <Backdrop open>
+        <CircularProgress color="inherit"/>
+      </Backdrop>
+      }
     </div>
   </div>
   );

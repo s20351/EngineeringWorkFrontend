@@ -29,29 +29,21 @@ const Home: React.FC = () => {
   const [isCurrentData, setIsCurrentData] = React.useState(false);
 
   const toggleAddFarm = () => {
-    if (isAddFarmOpen) {
       setIsCurrentData(false)
-    }
     setAddFarmState(!isAddFarmOpen);
   }
   const toggleAddCycle = () => {
-    if (isAddCycleOpen) {
       setIsCurrentData(false)
-    }
     setAddCycleState(!isAddCycleOpen);
   }
   const toggleAddOrderHatchery = () =>
     setOrderHatcheryState(!isAddOrderHatcheryOpen);
   const toggleDeleteFarm = () => {
-    if (isDeleteFarmOpen) {
       setIsCurrentData(false)
-    }
     setDeleteFarmState(!isDeleteFarmOpen);
   }
   const toggleExport = () => {
-    if (isExportOpen) {
       setIsCurrentData(false)
-    }
     setExportState(!isExportOpen);
   }
   const [homeScreen, setHomeScreen] = React.useState([]);
@@ -59,9 +51,7 @@ const Home: React.FC = () => {
   const [farmDetailsID, setFarmDetailsID] = React.useState('');
   const [isFarmDetailsOpen, setFarmDetailsState] = React.useState(false);
   const toggleFarmDetails = () => {
-    if (isFarmDetailsOpen) {
       setIsCurrentData(false)
-    }
     setFarmDetailsState(!isFarmDetailsOpen);
   }
   const [currentNumberMale, setCurrentNumberMale] = React.useState(0);

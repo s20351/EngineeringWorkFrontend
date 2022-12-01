@@ -46,20 +46,11 @@ export const AddCycle: React.FC<ModalProps> = ({ title, isOpen, onClose, childre
   }
 
   function alertDialogBox(){
-    const [day, month, year] = orderHatcheryDate.split('/')
-    const dateIn = new Date(+year-1, +month - 1, +day)
-    const dateOut = new Date(endDate);
+    
     if(farm == "" || description == "" || orderHatcheryId == "" || endDate ==""){
       Swal.fire({
         title: 'Złe dane',
         text: 'Musisz uzupełnić wszystkie pola',
-        icon: 'warning',
-        confirmButtonColor: 'rgb(43, 103, 119)',
-      });
-    }else if(dateIn > dateOut){
-      Swal.fire({
-        title: 'Złe dane',
-        text: 'Data zakończenia nie może być przed datą rozpoczęcia...',
         icon: 'warning',
         confirmButtonColor: 'rgb(43, 103, 119)',
       });
