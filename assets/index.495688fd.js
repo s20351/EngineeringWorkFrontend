@@ -344,7 +344,7 @@ https://sweetalert2.github.io/#ajax-request`),N$(c),typeof c.title=="string"&&(c
   align-items: center;
   margin-bottom: 0.5rem;
   margin-top: 2rem;
-`,mr="/EngineeringWorkFrontend/assets/x.781ac9e4.jpg",oH=Z.fieldset`
+`,mr="/assets/x.781ac9e4.jpg",oH=Z.fieldset`
   display: flex;
   flex-direction: column;
 `,iH=Z.div`
