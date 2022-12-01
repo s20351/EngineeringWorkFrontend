@@ -1,10 +1,13 @@
 {
+  "homepage": "https://s20351.github.io/EngineeringWorkFrontend",
   "name": "reacttut",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages",
     "build": "vite build",
     "serve": "npm run build && vite preview"
   },
