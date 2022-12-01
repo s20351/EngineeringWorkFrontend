@@ -7,11 +7,16 @@ import { StyledAppLayout } from "../../styledApp";
 const HomePage = (): ReactElement => {
   const { data } = useContext(FarmerContext);
   return (
+    data.id != -1 ? 
     <>
       <NavBar />
       <StyledAppLayout>
         {<Home />}
       </StyledAppLayout>
+    </>
+    : 
+    <>
+      <NotFound/>
     </>
   );
 };
